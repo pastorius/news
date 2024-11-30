@@ -1,0 +1,2528 @@
+Return-Path: <pastorius@gmail.com>
+Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
+ by inbound-smtp.us-east-2.amazonaws.com with SMTP id ll2i51bel9va127ikm96uqh0rct9aoca3aeg2fo1
+ for inbound@news.smitchee.com;
+ Sat, 30 Nov 2024 03:32:27 +0000 (UTC)
+X-SES-Spam-Verdict: PASS
+X-SES-Virus-Verdict: PASS
+Received-SPF: pass (spfCheck: domain of _spf.google.com designates 209.85.216.52 as permitted sender) client-ip=209.85.216.52; envelope-from=pastorius@gmail.com; helo=mail-pj1-f52.google.com;
+Authentication-Results: amazonses.com;
+ spf=pass (spfCheck: domain of _spf.google.com designates 209.85.216.52 as permitted sender) client-ip=209.85.216.52; envelope-from=pastorius@gmail.com; helo=mail-pj1-f52.google.com;
+ dkim=pass header.i=@gmail.com;
+ dmarc=pass header.from=gmail.com;
+X-SES-RECEIPT: AEFBQUFBQUFBQUFIeUJrcHhWM2FVZSsycmxNMVVzazNxdEh6YmpsbExud3JsVDZQSXlYczMvZTVkS0pGakRncVM0ZkJPbDdzbnRiSnZZL1pBZ0hUelp6STVvWkpXUGRmRTR6K1NWYzVWZ2I2ZlQwR1RxZ3NHN1RFUWd3SlVlVEpab3lqdTBPYjBZVklsdU1wTW5EZm1iS2t1ZjFuQWFpTWQzb21JZUp4R240ZXh4N0xYNmlkaElRM1dZU29iUHl2UDZEYWwzMTR1bWx3a0Fzb1UwaVpSWnAvR2xTL1Nqc0V3RlcrV2JIbDZqeG5Ka2FYM3ZoMU1oRFhGYWcvZ2JkSWVkb1hkSHdOQ2VqU2RoYW1rc1BYQjdpNWZWTnFGNHRBTVdpMVcrRDVsb2RROVJ3eHJwd3RERlE9PQ==
+X-SES-DKIM-SIGNATURE: a=rsa-sha256; q=dns/txt; b=MfnHBxWQeJf61qjLkBd7SsWBvu4A4JnsIIl90iDSGNCNf0BwnHTRGIm2bEX1b4+9Ct4Zbn/KRv4pDeKhK/fZ5Pq90JwtCGgWCfoq0DdhZwSXY8Qf8162KT++tXqbH/AN2gDM7e7yEA5bq6hiXVkcFJqaBncjQ20cd37Cxkm9QW0=; c=relaxed/simple; s=xplzuhjr4seloozmmorg6obznvt7ijlt; d=amazonses.com; t=1732937549; v=1; bh=pEA/iKHbRafGz6jSjdjbK2UTOQturNeIpYW7PVjp+UE=; h=From:To:Cc:Bcc:Subject:Date:Message-ID:MIME-Version:Content-Type:X-SES-RECEIPT;
+Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-2e9e377aeadso2006434a91.1
+        for <inbound@news.smitchee.com>; Fri, 29 Nov 2024 19:32:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1732937547; x=1733542347; darn=news.smitchee.com;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=pEA/iKHbRafGz6jSjdjbK2UTOQturNeIpYW7PVjp+UE=;
+        b=FEpBsII3Op03h5XTLi58HRDWT2PQ8injU/Xa36ix5WTbWJfrmMXMmZhEdu4Xb3rizB
+         aO/+AArtJyBKsM4/4J8HzLXHV1YIRzcOHzw0aEppNC0kE6uDv30dYFtcN6sKkHN2Lm+I
+         /xI462N7jojQcFqWJAnWtmX9lbbyJf/CvanAo6XZTodw4yAa7mLJoU39RpO7/vj/gaS7
+         QyB8wZwaSl551HhWVEPTw5AFK+/aJdxXL3Iw89dPX6VXmFCBCTZDO34IuLkjbBUqD9jP
+         sU/B+DmQzZiPszz6Bs9mTHFqvKtZXcvaiBLitKIPHI5W9NK/q/GLn0i6bGT/dFzjLNu+
+         gJVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1732937547; x=1733542347;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=pEA/iKHbRafGz6jSjdjbK2UTOQturNeIpYW7PVjp+UE=;
+        b=IKzX3YaMTcuyqVWJKvp8ITvBx5bkI0wvwKQr8M8Y5LOjLpWUnHMYMfpFDupe9R4GSn
+         gSGknvQVXz9VGYG42vFOrINdPQETHQOUlJdOPM1Mrn4eh92nrifMRUHQUmJW0zNfjnDt
+         p4w/15sUGjlrueCPhEwxg9BpjDtyKgr9wi2EWB+64/+V1u/m3ezlruA3pQhaIlWxsmlY
+         xrFIomfsqmLhih8om94zvpdy/XHJF8f/O1igQ2oHLPhR3zLXSexk/Pm9buP0s9sMt8Et
+         B9LOHVEaLqPDnGIf9cZTZToII2dlSYUfJS0+Mop1qWvHgy1x/XvfO8NiDV4OsmDw9un/
+         tj2g==
+X-Gm-Message-State: AOJu0YwN+/0wkjIBPEzYVkcF0BF/rpKgHQ3iFtZuj9mFaMo1v6e6EGH2
+	TGkGRfvokP2sbqLw6AjSfzSgiBFe35iTO4Rm9cnGvjP0UTI1ZJ7Jtz3j3Wi+ZOqhua2D/TFrYqw
+	2tp6cEQ4avlxeMljFqEHBFJ8Qu/rewQ==
+X-Gm-Gg: ASbGncuM2EFzsz25XIa/ZY1nBQONz2CLUqwtbIjG5DHKtV70Ci5vIMH5/Bgo+eRjTD4
+	Uy/5wG4OmlBgttrcWel0Y9ykMGTXcX5s=
+X-Google-Smtp-Source: AGHT+IHcSEgr/ZVgX8vbO3WtBbeK6NiDg0Op6usm+mu4FqvIBr2c/6vRucU3uMhBZspXZ1wsAWuBpwXStTnEwu7Rmek=
+X-Received: by 2002:a17:90b:17cd:b0:2ea:a3fc:b944 with SMTP id
+ 98e67ed59e1d1-2ee097c1e92mr15520784a91.28.1732937546101; Fri, 29 Nov 2024
+ 19:32:26 -0800 (PST)
+MIME-Version: 1.0
+References: <20241127042813.37633651.4673008@sailthru.com>
+In-Reply-To: <20241127042813.37633651.4673008@sailthru.com>
+From: Evan Smith <pastorius@gmail.com>
+Date: Fri, 29 Nov 2024 19:32:14 -0800
+Message-ID: <CAHzWgFj3-aGrL5xLgc2FHpNj+B2+esLswm6COrHfGq5YY-qvAQ@mail.gmail.com>
+Subject: Fwd: Thanksgiving Travel, Wegovy Coverage, and the Best of November
+To: inbound@news.smitchee.com
+Content-Type: multipart/alternative; boundary="000000000000da7b7b062818f60e"
+
+--000000000000da7b7b062818f60e
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Facts, without motives.
+[image: beacon]
+View email in browser
+<https://link.join1440.com/view/67456a0c2f068d0b710a8397memb7.2s5ps/e18e42d=
+0>
+.
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly9qb2luMTQ0MC5jb=
+20vP3V0bV9zb3VyY2U9am9pbjE0NDAmdXRtX21lZGl1bT1lbWFpbA/67456a0c2f068d0b710a8=
+397B0652468a>
+
+
+*In partnership with*
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly9idXRjaGVyYm94L=
+nB4Zi5pby9jLzEyNjAwMTkvMjE3MzAyMi8xNjQxOQ/67456a0c2f068d0b710a8397Bb61ef777=
+>
+
+*Good morning. It's Wednesday, Nov. 27*, and we're covering travel and
+eating trends for Thanksgiving Day 2024, a proposed change to weight-loss
+medicine coverage, and much more. First time reading? Join over 4
+million intellectually curious readers. *Sign up here
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly9qb2luMTQ0MC5jb=
+20vP3V0bV9zb3VyY2U9am9pbjE0NDAmdXRtX21lZGl1bT1lbWFpbCZ1dG1fY2FtcGFpZ249ZnQy=
+/67456a0c2f068d0b710a8397C8fc0c7ad>*
+.
+
+*Don=E2=80=99t keep us a secret*: *Share the email
+<hello@join1440.com?subject=3DBest%20newsletter%20for%20unbiased%20news&bod=
+y=3DHey%2C%0A%0AI%E2%80%99ve%20been%20reading%201440%2C%20and%20definitely%=
+20think%20you%E2%80%99d%20enjoy%20it%20as%20well.%20It%20has%20all%20of%20t=
+he%20day%E2%80%99s%20top%20news%20and%20info%E2%80%94sports%2C%20science%2C=
+%20culture%2C%20politics%2C%20business%2C%20and%20more%E2%80%94%20in%20a%20=
+concise%20and%20impartial%20(and%20free)%205-minute%20morning%20email.%20I%=
+20learn%20something%20new%20every%20time%20I%20open%20it.%20Check%20out%20t=
+he%20%231%20newsletter%20for%20unbiased%20news%20here%3A%0A%0Ahttps%3A%2F%2=
+Fjoin1440.com%2F%3Futm_source%3Dnl_fwd_cta_main%26utm_medium%3Demail%26utm_=
+campaign%3Dintro-share>*with
+friends (*copy URL here
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly9qb2luMTQ0MC5jb=
+20vP3V0bV9zb3VyY2U9am9pbjE0NDAmdXRtX21lZGl1bT1ubF9zaGFyZV9zdGFydCZ1dG1fY2Ft=
+cGFpZ249aW50cm8tc2hhcmUmc2hhcmU9dHJ1ZQ/67456a0c2f068d0b710a8397D55ceb8dc>*
+)
+
+And, as always, send us feedback at *hello@join1440.com
+<hello@join1440.com>*.
+
+*Editor's note: The 1440 staff will be off for Thanksgiving. We'll see you
+Saturday=E2=80=94have a great holiday!*
+Need To Know
+Need To Know
+
+
+Thanksgiving Logistics
+
+A record 80 million Americans
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly9uZXdzcm9vbS5hY=
+WEuY29tLzIwMjQvMTEvbmVhcmx5LTgwLW1pbGxpb24tYW1lcmljYW5zLWV4cGVjdGVkLXRvLXRy=
+YXZlbC1vdmVyLXRoYW5rc2dpdmluZy8/67456a0c2f068d0b710a8397B5f44edb6>
+will
+travel 50 miles or more over Thanksgiving weekend, the majority (a record
+71.7 million) by car. Millions more are expected to fly
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly93d3cudHNhLmdvd=
+i9uZXdzL3ByZXNzL3JlbGVhc2VzLzIwMjQvMTEvMTkvdHNhLXJlYWRpZXMtYnVzaWVzdC10aGFu=
+a3NnaXZpbmctdHJhdmVsLXBlcmlvZC1yZWNvcmQtcHJvdmlkZXM/67456a0c2f068d0b710a839=
+7Bd7550a07>,
+including a record-breaking 3 million on Sunday alone.
+
+
+
+Over 80% of Americans will eat turkey (watch overview
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly93d3cueW91dHViZ=
+S5jb20vd2F0Y2g_dj1XVm9YNW9UcnN0UQ/67456a0c2f068d0b710a8397B31e1c5f9>),
+requiring an estimated 46 million birds to supply the feast. A recent
+survey suggests mashed potatoes, bread rolls, and pie will be standard
+fare; macaroni and cheese consumption is highly regionalized (see map
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly93d3cubmV3c3dlZ=
+WsuY29tL3RoYW5rc2dpdmluZy1kaW5uZXItcG9sbC1tb3N0LWxlYXN0LXBvcHVsYXItZm9vZHMt=
+MTk5MTA4MA/67456a0c2f068d0b710a8397B0b46e46a>).
+A holiday meal for 10 will cost $58 on average, down 5% from last year and
+the lowest inflation-adjusted cost in the 39 years of the farmers' survey (=
+see
+charts
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly93d3cuZmIub3JnL=
+21hcmtldC1pbnRlbC90aGFua3NnaXZpbmctZGlubmVyLWNvc3RzLWFyZS1kb3duLWFnYWlu/674=
+56a0c2f068d0b710a8397B6f6cb461>
+).
+
+
+
+Meteorologists are predicting a relatively wet, chilly
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly93d3cudXNhdG9kY=
+XkuY29tL3N0b3J5L25ld3MvbmF0aW9uLzIwMjQvMTEvMjYvdGhhbmtzZ2l2aW5nLXdlYXRoZXIt=
+Zm9yZWNhc3QtbGl2ZS11cGRhdGVzLXNub3ctdHJhdmVsLzc2NTg1NTI5MDA3Lw/67456a0c2f06=
+8d0b710a8397Bb6a25f99>
+Thanksgiving for half the country, with snow in the Midwest and rain on the
+East Coast. A cold front will impact close to 200 million Americans by
+Saturday. The Macy's Thanksgiving Day Parade will take place rain or shine
+tomorrow in New York City (8:30 am ET, NBC).
+
+
+Proposed Obesity Coverage
+
+The Biden administration introduced a proposal
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly93d3cuY25iYy5jb=
+20vMjAyNC8xMS8yNi9iaWRlbi1wcm9wb3Nlcy1tZWRpY2FyZS1hbmQtbWVkaWNhaWQtY292ZXIt=
+d2VpZ2h0LWxvc3MtZHJ1Z3MuaHRtbA/67456a0c2f068d0b710a8397B4d2c8207>
+yesterday to expand Medicare and Medicaid coverage to include popular
+weight-loss medications like Wegovy and Zepbound. The initiative, led by
+the Department of Health and Human Services, would classify obesity as a
+treatable disease to reduce associated health risks including heart disease
+and diabetes.
+
+
+
+Roughly 40% of Americans
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly93d3cuY2JzbmV3c=
+y5jb20vbmV3cy9vYmVzaXR5LXJhdGUtdXMtYWR1bHRzLWNkYy1kYXRhLW1hcC8/67456a0c2f06=
+8d0b710a8397B53b9b0f4>
+are considered clinically obese. Weight-loss drugs can reduce weight by as
+much as 15% to 25% by regulating appetite
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly9tY2IuaWxsaW5va=
+XMuZWR1L25ld3MvMjAyNC0wNy0wOS9ob3ctZG8tZHJ1Z3Mtb3plbXBpYy13b3JrLXdlaWdodC1s=
+b3Nz/67456a0c2f068d0b710a8397B8bb08362>,
+signaling to the brain that the body is full, and reducing hunger. The
+proposed rule could reduce out-of-pocket costs for the drug=E2=80=94which c=
+an
+exceed $1,000 per month=E2=80=94by up to 95% for over 7.4 million Medicare =
+and
+Medicaid beneficiaries. The estimated cost to taxpayers is $35B over the
+next decade.
+
+
+
+The rule would not be finalized until after President-elect Donald Trump
+takes office; his HHS pick, Robert F. Kennedy Jr.
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly93d3cudXNhdG9kY=
+XkuY29tL3N0b3J5L2xpZmUvaGVhbHRoLXdlbGxuZXNzLzIwMjQvMTEvMjYvYmlkZW4tcmZrLWpy=
+LW96ZW1waWMtd2Vnb3Z5LXdlaWdodC1sb3NzLW1lZGljYXRpb24vNzY1ODc0NTYwMDcv/67456a=
+0c2f068d0b710a8397B695e08ae>,
+has criticized the drugmakers, instead seeking to prioritize access to
+healthy nutrition.
+
+
+Tit-for-Tat Tariffs
+
+Mexican President Claudia Sheinbaum threatened retaliatory tariffs
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly9hcG5ld3MuY29tL=
+2FydGljbGUvbWV4aWNvLXRhcmlmZnMtdHJ1bXAtcmV0YWxpYXRlLXNoZWluYmF1bS1mYWMwYjBj=
+NmVlOGM0MjVhOTI4NDE4ZGU3MzMyYjc0YQ/67456a0c2f068d0b710a8397Bb90c575e>
+on US goods yesterday, in response to President-elect Donald Trump's
+pledged 25% tariffs if Mexico fails to halt the flow of drugs and migrants
+into the US. Trump also indicated he would impose a 25% tariff on goods
+from Canada and an additional 10% tariff on goods from China.
+
+
+
+The US is the world's largest importer, with Mexico topping its list of
+trading partners, followed by Canada and China (see list here
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly93d3cuY2Vuc3VzL=
+mdvdi9mb3JlaWduLXRyYWRlL3N0YXRpc3RpY3MvaGlnaGxpZ2h0cy90b3B5ci5odG1s/67456a0=
+c2f068d0b710a8397B0e01e14b>).
+The three North American countries exchanged $1.8T worth of goods in 2022;
+annual US trade with China is $600B. The US is Mexico's top importer, with
+cars, food, and beer among the goods most likely to be impacted by tariffs.
+Canada supplied 60% of the US' crude oil, among other goods.
+
+
+
+The announcement shook up global markets yesterday, with automakers' stocks
+especially hard hit. Canadian and Mexican currencies fell against the value
+of the dollar.
+
+*In partnership with ButcherBox*
+
+Free Steak For 1 Year
+
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly9idXRjaGVyYm94L=
+nB4Zi5pby9jLzEyNjAwMTkvMjE3MzAyMi8xNjQxOQ/67456a0c2f068d0b710a8397Cb61ef777=
+>
+
+... *Yes, you read that right.* New ButcherBox customers will *get their
+choice of NY strip, filet mignon, or ribeye in every box for a year=E2=80=
+=94for
+free*
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly9idXRjaGVyYm94L=
+nB4Zi5pby9jLzEyNjAwMTkvMjE3MzAyMi8xNjQxOQ/67456a0c2f068d0b710a8397Db61ef777=
+>
+(a $336+ value).
+
+
+
+We know that these days, it feels nearly impossible to find quality,
+affordable meat and seafood at the grocery store. And figuring out where
+exactly it came from? *Good luck*. But with ButcherBox, each box of
+free-range, antibiotic-free meats is *traceable back to the farm it came
+from*
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly9idXRjaGVyYm94L=
+nB4Zi5pby9jLzEyNjAwMTkvMjE3MzAyMi8xNjQxOQ/67456a0c2f068d0b710a8397Eb61ef777=
+>,
+and at rates that won=E2=80=99t break the bank. Grass-fed beef, free-range =
+organic
+chicken, crate-free pork, wild-caught seafood =E2=80=A6 ButcherBox lets you=
+ pick
+and choose, and delivers them directly to your door. It=E2=80=99s the simpl=
+er way
+to *feed your family high-quality protein*
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly9idXRjaGVyYm94L=
+nB4Zi5pby9jLzEyNjAwMTkvMjE3MzAyMi8xNjQxOQ/67456a0c2f068d0b710a8397Fb61ef777=
+>
+.
+
+
+
+For the next 48 hours, *sign up for ButcherBox*
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly9idXRjaGVyYm94L=
+nB4Zi5pby9jLzEyNjAwMTkvMjE3MzAyMi8xNjQxOQ/67456a0c2f068d0b710a8397Gb61ef777=
+>,
+and you=E2=80=99ll score a mouth-watering deal. Get your favorite cut of st=
+eak free
+in every box for a year (choose between ribeye, filet mignon, and NY
+strip), *PLUS $100 off ($20 off your first 5 boxes!) with code
+1440NOVEMBER.*
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly9idXRjaGVyYm94L=
+nB4Zi5pby9jLzEyNjAwMTkvMjE3MzAyMi8xNjQxOQ/67456a0c2f068d0b710a8397Hb61ef777=
+>
+
+*Please support our sponsors!*
+In The Know
+In The Know
+
+
+Sports, Entertainment, & Culture
+
+*>* *Disney settles $43M* class-action lawsuit with 9,000 female workers
+alleging they were paid less than their male counterparts in comparable
+roles (More
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly93d3cuaG9sbHl3b=
+29kcmVwb3J0ZXIuY29tL2J1c2luZXNzL2J1c2luZXNzLW5ld3MvZGlzbmV5LTQzLW1pbGxpb24t=
+Y2xhc3MtYWN0aW9uLXNldHRsZW1lbnQtd29tZW5zLXBheS1kaXNwYXJpdGllcy0xMjM2MDcxNzg=
+xLz91dG1fc291cmNlPWpvaW4xNDQwJnV0bV9tZWRpdW09ZW1haWwmdXRtX3BsYWNlbWVudD1uZX=
+dzbGV0dGVy/67456a0c2f068d0b710a8397B0262b735>
+)
+
+*>* *Jim Abrahams*, film director and writer best known for "Airplane!" and
+"Naked Gun" series, dies at age 80 (More
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly92YXJpZXR5LmNvb=
+S8yMDI0L2ZpbG0vb2JpdHVhcmllcy1wZW9wbGUtbmV3cy9qaW0tYWJyYWhhbXMtZGVhZC1haXJw=
+bGFuZS1uYWtlZC1ndW4taG90LXNob3RzLTEyMzYyMjM2ODMvP3V0bV9zb3VyY2U9am9pbjE0NDA=
+mdXRtX21lZGl1bT1lbWFpbCZ1dG1fcGxhY2VtZW50PW5ld3NsZXR0ZXI/67456a0c2f068d0b71=
+0a8397B0bb486eb>)
+| *French-Japanese TV series *"Les Gouttes de Dieu (Drops of God)" wins
+best drama at 2024 International Emmy Awards (More
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly9kZWFkbGluZS5jb=
+20vMjAyNC8xMS8yMDI0LWludGVybmF0aW9uYWwtZW1teS1hd2FyZHMtd2lubmVycy1saXN0LTEy=
+MzYxODc0MTAvP3V0bV9zb3VyY2U9am9pbjE0NDAmdXRtX21lZGl1bT1lbWFpbCZ1dG1fcGxhY2V=
+tZW50PW5ld3NsZXR0ZXI/67456a0c2f068d0b710a8397B6ffc12b5>
+)
+
+*>* *Former show host Wendy Williams* reportedly "permanently disabled and
+legally incapacitated" amid dementia battle; Williams revealed her dementia
+diagnosis earlier this year (More
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly9wZW9wbGUuY29tL=
+3dlbmR5LXdpbGxpYW1zLWRlZW1lZC1wZXJtYW5lbnRseS1kaXNhYmxlZC1sZWdhbGx5LWluY2Fw=
+YWNpdGF0ZWQtZnJvbS1kZW1lbnRpYS1kaWFnbm9zaXMtY2xhaW1zLWd1YXJkaWFuLTg3NTIyOTU=
+_dXRtX3NvdXJjZT1qb2luMTQ0MCZ1dG1fbWVkaXVtPWVtYWlsJnV0bV9wbGFjZW1lbnQ9bmV3c2=
+xldHRlcg/67456a0c2f068d0b710a8397B30d68c4e>
+)
+
+
+Science & Technology
+
+*>* *Chipmaker Intel awarded* close to $7.9B to support building and
+expansion of semiconductor manufacturing facilities in Arizona, New Mexico,
+Oregon, and Ohio; funds come from the 2022 CHIPS Act (More
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly93d3cudGhldmVyZ=
+2UuY29tLzIwMjQvMTEvMjYvMjQzMDYzNDgvaW50ZWwtYXdhcmRlZC04LWJpbGxpb24tY2hpcHMt=
+YWN0LWZ1bmRpbmctdXMtY2hpcG1ha2luZz91dG1fc291cmNlPWpvaW4xNDQwJnV0bV9tZWRpdW0=
+9ZW1haWwmdXRtX3BsYWNlbWVudD1uZXdzbGV0dGVy/67456a0c2f068d0b710a8397B39d91c92=
+>
+)
+
+*>* *Cancer researchers discover* how low glucose environments around
+tumors help cancer cells evade chemotherapy drugs; findings may lead to
+more effective treatments (More
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly9ueXVsYW5nb25lL=
+m9yZy9uZXdzL3N0dWR5LWRldGFpbHMtaG93LWNhbmNlci1jZWxscy1mZW5kLXN0YXJ2YXRpb24t=
+ZGVhdGgtY2hlbW90aGVyYXB5P3V0bV9zb3VyY2U9am9pbjE0NDAmdXRtX21lZGl1bT1lbWFpbCZ=
+1dG1fcGxhY2VtZW50PW5ld3NsZXR0ZXI/67456a0c2f068d0b710a8397B359b7d06>
+)
+
+*>* *Scientists transplant *pig heart valve into a rodent with the
+assistance of human skin cells reprogrammed into heart valve cells; the
+procedure paves the way for similar organ transplants to humans, with
+roughly 30,000 Americans dying each year from aortic heart valve failure (
+More
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly9uZXdzLm5vcnRoZ=
+WFzdGVybi5lZHUvMjAyNC8xMS8yNi9vcmdhbi10cmFuc3BsYW50LXJlc2VhcmNoLXBpZ3MtaGVh=
+cnQtdmFsdmUvP3V0bV9zb3VyY2U9am9pbjE0NDAmdXRtX21lZGl1bT1lbWFpbCZ1dG1fcGxhY2V=
+tZW50PW5ld3NsZXR0ZXI/67456a0c2f068d0b710a8397Bd1059ceb>
+)
+
+*In partnership with NativePath*
+*Your Most Abundant Protein*
+*Your Most Abundant Protein*
+
+Did you know the body produces 1%-2% less collagen per year, starting in
+your 30s? As *the most abundant protein in the body*
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly9mYi5uYXRpdmVwY=
+XRoLmNvbS9yZC9yLnBocD9zaWQ9MTcyMiZwdWI9MjQwNjk1JmMxPTIwMjQxMTI3LVJFTVNFQ09O=
+REFSWS1lc3QxNzUwMCZjMj0mYzM9/67456a0c2f068d0b710a8397B6df290bb>,
+this contributes to wrinkles, joint pain, and dwindling bones.
+
+
+
+Luckily, you can now *slow the process with NativePath Collagen Protein*
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly9mYi5uYXRpdmVwY=
+XRoLmNvbS9yZC9yLnBocD9zaWQ9MTcyMiZwdWI9MjQwNjk1JmMxPTIwMjQxMTI3LVJFTVNFQ09O=
+REFSWS1lc3QxNzUwMCZjMj0mYzM9/67456a0c2f068d0b710a8397C6df290bb>.
+In 1 study, 5g of collagen/day caused a 7% increase in bone density in 1
+year! Simply add 2 flavorless NativePath scoops to coffee or your favorite
+drink for *18g of protein*
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly9mYi5uYXRpdmVwY=
+XRoLmNvbS9yZC9yLnBocD9zaWQ9MTcyMiZwdWI9MjQwNjk1JmMxPTIwMjQxMTI3LVJFTVNFQ09O=
+REFSWS1lc3QxNzUwMCZjMj0mYzM9/67456a0c2f068d0b710a8397D6df290bb>
+!
+
+
+
+*1440 Readers: Get free collagen with every purchase during their Black
+Friday Sale!*
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly9mYi5uYXRpdmVwY=
+XRoLmNvbS9yZC9yLnBocD9zaWQ9MTcyMiZwdWI9MjQwNjk1JmMxPTIwMjQxMTI3LVJFTVNFQ09O=
+REFSWS1lc3QxNzUwMCZjMj0mYzM9/67456a0c2f068d0b710a8397E6df290bb>
+
+
+
+Business & Markets
+
+*>* *US stock markets* close higher (S&P 500 +0.6%, Dow +0.3%, Nasdaq
++0.6%) following news of Israel-Hezbollah ceasefire deal (More
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly9maW5hbmNlLnlha=
+G9vLmNvbS9uZXdzL2FzaWFuLXN0b2Nrcy1yaXNlLWJvbmRzLXJhbGx5LTIyMzUyNDA0OS5odG1s=
+P3V0bV9zb3VyY2U9am9pbjE0NDAmdXRtX21lZGl1bT1lbWFpbCZ1dG1fcGxhY2VtZW50PW5ld3N=
+sZXR0ZXI/67456a0c2f068d0b710a8397Bd894fdc5>)
+| *Learn about the history* of the US stock markets (More
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly9kaXNjb3Zlci5qb=
+2luMTQ0MC5jb20vdG9waWNzL3N0b2NrLW1hcmtldD91dG1fc291cmNlPWpvaW4xNDQwJnV0bV9t=
+ZWRpdW09ZW1haWwmdXRtX2NhbXBhaWduPXNpZ251cC10b3BpY3MtYnVzaW5lc3MtYW5kLWZpbmF=
+uY2U/67456a0c2f068d0b710a8397Bc031760a>
+)
+
+*>* *Walmart rolls back *diversity programs; changes include closing $100M
+equity racial center launched in 2020, phasing out the term "DEI," ending
+preference for suppliers majority owned by women, LGBTQ+ members, veterans,
+and others; ends sale of some transgender-linked products on Walmart.com (
+More
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly93d3cuY2JzbmV3c=
+y5jb20vbmV3cy93YWxtYXJ0LWRlaS1wb2xpY2llcy1yb2xsYmFjay1jZW8tam9obi1mdXJuZXIt=
+dHJ1bXAtdGFyaWZmcy8_dXRtX3NvdXJjZT1qb2luMTQ0MCZ1dG1fbWVkaXVtPWVtYWlsJnV0bV9=
+wbGFjZW1lbnQ9bmV3c2xldHRlcg/67456a0c2f068d0b710a8397Bc176198a>
+)
+
+*>* *Federal Reserve minutes *from meeting earlier this month suggest
+slower pace of interest rate cuts than previously indicated; next meeting
+is Dec. 17-18 (More
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly90aGVoaWxsLmNvb=
+S9ob21lbmV3cy9hcC9hcC1idXNpbmVzcy9hcC1mZWRlcmFsLXJlc2VydmUtb2ZmaWNpYWxzLXNp=
+Z25hbC1jYXV0aW91cy1wYXRoLWZvci1yYXRlLWN1dHMtYW1pZC1zdGlsbC1oaWdoLWluZmxhdGl=
+vbi9tbGl0ZS8_dXRtX3NvdXJjZT1qb2luMTQ0MCZ1dG1fbWVkaXVtPWVtYWlsJnV0bV9wbGFjZW=
+1lbnQ9bmV3c2xldHRlcg/67456a0c2f068d0b710a8397B5bbaf0a2>)
+| *Heard about the Fed,* but don't know how it works? Sign up for 1440
+Business & Finance, where we cover this topic and many more (Join here
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly9kaXNjb3Zlci5qb=
+2luMTQ0MC5jb20vdG9waWNzL2J1c2luZXNzLWFuZC1maW5hbmNlP3V0bV9zb3VyY2U9am9pbjE0=
+NDAmdXRtX21lZGl1bT1lbWFpbCZ1dG1fY2FtcGFpZ249c2lnbnVwLXRvcGljcy1idXNpbmVzcy1=
+hbmQtZmluYW5jZQ/67456a0c2f068d0b710a8397B33d97acb>
+)
+
+
+Politics & World Affairs
+
+*>* *Israel and Hezbollah* agree to US- and France-led ceasefire, ending 14
+months of rocket, missile exchanges; Israeli soldiers to withdraw, Lebanese
+army to repopulate country's south in the coming 60 days (More
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly9hYmNuZXdzLmdvL=
+mNvbS9JbnRlcm5hdGlvbmFsL2lzcmFlbC1oZXpib2xsYWgtcmVhY2gtY2Vhc2UtZmlyZS1hZ3Jl=
+ZW1lbnQvc3Rvcnk_aWQ9MTE2MTg2MzMzP3V0bV9zb3VyY2U9am9pbjE0NDAmdXRtX21lZGl1bT1=
+lbWFpbCZ1dG1fcGxhY2VtZW50PW5ld3NsZXR0ZXI/67456a0c2f068d0b710a8397Becc42eef>=
+)
+| *See previous write-up *(More
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly9qb2luMTQ0MC5jb=
+20vbmV3c2xldHRlci90cnVtcC1jaGFyZ2VzLWRpc21pc3NlZC1pc3JhZWwtaGV6Ym9sbGFoLWNl=
+YXNlZmlyZS1hbmQtcGFyZG9uZWQtdHVya2V5cw/67456a0c2f068d0b710a8397Bcdb1f449>
+)
+
+*>* *President-elect Donald Trump* signs memorandum of understanding with
+the Biden White House, clearing the stage for the next phase of the
+presidential transition (More
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly90aGVoaWxsLmNvb=
+S9ob21lbmV3cy81MDEwOTY2LXRydW1wLW1vdS1iaWRlbi13aGl0ZS1ob3VzZS8_dXRtX3NvdXJj=
+ZT1qb2luMTQ0MCZ1dG1fbWVkaXVtPWVtYWlsJnV0bV9wbGFjZW1lbnQ9bmV3c2xldHRlcg/6745=
+6a0c2f068d0b710a8397Ba3740877>)
+| *How does a presidential *transition work? (More
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly9wcmVzaWRlbnRpY=
+Wx0cmFuc2l0aW9uLm9yZy9hYm91dC10aGUtY2VudGVyL2ZhcXMtYWJvdXQtcHJlc2lkZW50aWFs=
+LXRyYW5zaXRpb25zLw/67456a0c2f068d0b710a8397B73539f23>
+)
+
+*>** Thirty-three survivors rescued* after Red Sea tourist boat with
+Egyptian crew sinks; seven people remain unaccounted for (More
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly93d3cuYmJjLmNvb=
+S9uZXdzL2FydGljbGVzL2Mxa254ZDI0djh4bz91dG1fc291cmNlPWpvaW4xNDQwJnV0bV9tZWRp=
+dW09ZW1haWwmdXRtX3BsYWNlbWVudD1uZXdzbGV0dGVy/67456a0c2f068d0b710a8397B3b51a=
+639>
+)
+
+*In partnership with ButcherBox*
+
+Ribeye, Filet Mignon, and NY Strip=E2=80=94Oh My
+
+
+If you're drooling as much as we are thinking about arguably one of the
+best cuts of steak, *read closely*. ButcherBox, the service that curates
+high-quality meats and *delivers them straight to your door*
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly9idXRjaGVyYm94L=
+nB4Zi5pby9jLzEyNjAwMTkvMjE3MzAyMi8xNjQxOQ/67456a0c2f068d0b710a8397Ib61ef777=
+>,
+is running one of their best deals of the year.
+
+
+
+Along with their other *preservative- and antibiotic-free meats in every
+box*
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly9idXRjaGVyYm94L=
+nB4Zi5pby9jLzEyNjAwMTkvMjE3MzAyMi8xNjQxOQ/67456a0c2f068d0b710a8397Jb61ef777=
+>,
+new customers who sign up in the next 48 hours will also get f*ree steak in
+every box for a year* (a $336+ value!). Choose between ribeye, filet
+mignon, and NY strip, *PLUS get $100 off ($20 off your first five boxes)
+with code 1440NOVEMBER.*
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly9idXRjaGVyYm94L=
+nB4Zi5pby9jLzEyNjAwMTkvMjE3MzAyMi8xNjQxOQ/67456a0c2f068d0b710a8397Kb61ef777=
+>
+
+*Please support our sponsors!*
+Etcetera=E2=80=94Best of November 2024
+Etcetera=E2=80=94Best of November 2024
+
+
+*Editor's note: More than 10 million monthly clicks can't be wrong. Here
+are the most popular stories we ran in November. Enjoy!*
+
+
+
+*(11/20/24)* See National Geographic's Pictures of the Year
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly93d3cudXNhdG9kY=
+XkuY29tL3N0b3J5L25ld3MvbmF0aW9uLzIwMjQvMTEvMTkvbmF0aW9uYWwtZ2VvZ3JhcGhpYy1w=
+aWN0dXJlcy1vZi15ZWFyLTIwMjQvNzY0MDUxNzUwMDcvP3V0bV9zb3VyY2U9am9pbjE0NDAmdXR=
+tX21lZGl1bT1lbWFpbCZ1dG1fcGxhY2VtZW50PW5ld3NsZXR0ZXI/67456a0c2f068d0b710a83=
+97B37167a21>
+.
+
+
+
+*(11/13/24)* Why people in old photographs didn't smile
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly93d3cudXB3b3J0a=
+HkuY29tL3doeS1kaWRuLXQtcGVvcGxlLXNtaWxlLWluLW9sZC1waG90b2dyYXBocy1pdC13YXNu=
+LXQtanVzdC1hYm91dC10aGUtbG9uZy1leHBvc3VyZS10aW1lcz91dG1fc291cmNlPWpvaW4xNDQ=
+wJnV0bV9tZWRpdW09ZW1haWwmdXRtX3BsYWNlbWVudD1uZXdzbGV0dGVy/67456a0c2f068d0b7=
+10a8397B352c92ba>
+.
+
+
+
+*(11/21/24)* Visualizing America's fastest-growing jobs
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly91c2FmYWN0cy5vc=
+mcvYXJ0aWNsZXMvd2hhdC1hcmUtdGhlLWZhc3Rlc3QtZ3Jvd2luZy1wcm9mZXNzaW9ucy1pbi1h=
+bWVyaWNhLz91dG1fc291cmNlPWpvaW4xNDQwJnV0bV9tZWRpdW09ZW1haWwmdXRtX3BsYWNlbWV=
+udD1uZXdzbGV0dGVy/67456a0c2f068d0b710a8397B582ac9d1>
+.
+
+
+
+*(11/22/24)* World's tallest and shortest women meet for tea
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly93d3cuZXVyb25ld=
+3MuY29tL2N1bHR1cmUvMjAyNC8xMS8yMS90aGUtd29ybGRzLXRhbGxlc3QtYW5kLXNob3J0ZXN0=
+LXdvbWVuLW1lZXQtaW4tbG9uZG9uLWZvci1yZWNvcmQtYnJlYWtpbmctdGVhP3V0bV9zb3VyY2U=
+9am9pbjE0NDAmdXRtX21lZGl1bT1lbWFpbCZ1dG1fcGxhY2VtZW50PW5ld3NsZXR0ZXI/67456a=
+0c2f068d0b710a8397B2fa12fd7>.
+(w/photo)
+
+
+
+*(11/2/24)* Texas man saves two lives in six weeks after 20 years in prison
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly93d3cubmJjZGZ3L=
+mNvbS9uZXdzL2xvY2FsL25vcnRoLXRleGFzLWhlcm8tc2F2ZXMtdHdvLWxpdmVzLWFmdGVyLXNw=
+ZW5kaW5nLTIwLXllYXJzLWluLXByaXNvbi8zNjgzODA3Lw/67456a0c2f068d0b710a8397Bee6=
+77d9f>
+.
+
+
+
+*(11/4/24)* Why do dogs wag their tails
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly93d3cudGhlLXNja=
+WVudGlzdC5jb20vd2h5LWRvLWRvZ3Mtd2FnLXRoZWlyLXRhaWxzLTcyMjIwP3V0bV9zb3VyY2U9=
+am9pbjE0NDAmdXRtX21lZGl1bT1lbWFpbCZ1dG1fcGxhY2VtZW50PW5ld3NsZXR0ZXI/67456a0=
+c2f068d0b710a8397B64084e88>
+?
+
+
+
+*(11/5/24)* Ranking America's best college towns
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly93YWxsZXRodWIuY=
+29tL2VkdS9lL2Jlc3Qtd29yc3QtY29sbGVnZS1jaXRpZXMtYW5kLXRvd25zLWluLWFtZXJpY2Ev=
+ODk3ND91dG1fc291cmNlPWpvaW4xNDQwJnV0bV9tZWRpdW09ZW1haWwmdXRtX3BsYWNlbWVudD1=
+uZXdzbGV0dGVy/67456a0c2f068d0b710a8397B84b01e95>
+.
+
+
+
+*(11/22/24)* A list of 25 important recipes from the past 100 years
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly9zbGF0ZS5jb20vb=
+GlmZS8yMDI0LzExL2Zvb2QtY29va2luZy1yZWNpcGVzLXRoYW5rc2dpdmluZy0yMDI0Lmh0bWw_=
+dXRtX3NvdXJjZT1qb2luMTQ0MCZ1dG1fbWVkaXVtPWVtYWlsJnV0bV9wbGFjZW1lbnQ9bmV3c2x=
+ldHRlcg/67456a0c2f068d0b710a8397B1d63bc35>
+.
+
+
+
+*(11/14/24)* Doctors put a time limit on the toilet
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly93d3cuY25uLmNvb=
+S8yMDI0LzExLzEyL2hlYWx0aC9waG9uZXMtb24tdG9pbGV0LXdlbGxuZXNzL2luZGV4Lmh0bWw_=
+dXRtX3NvdXJjZT1qb2luMTQ0MCZ1dG1fbWVkaXVtPWVtYWlsJnV0bV9wbGFjZW1lbnQ9bmV3c2x=
+ldHRlcg/67456a0c2f068d0b710a8397B9a7bd66c>
+.
+
+
+
+*(11/6/24)* Weather Photography of the Year award goes to "red sprites"
+image
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly93d3cuaWZsc2NpZ=
+W5jZS5jb20vb3RoZXJ3b3JsZGx5LXJlZC1zcHJpdGVzLXdpbi10b3Atc3BvdC1hdC13ZWF0aGVy=
+LXBob3RvZ3JhcGhlci1vZi10aGUteWVhci0yMDI0LTc2NjQ2P3V0bV9zb3VyY2U9am9pbjE0NDA=
+mdXRtX21lZGl1bT1lbWFpbCZ1dG1fcGxhY2VtZW50PW5ld3NsZXR0ZXI/67456a0c2f068d0b71=
+0a8397Bb609555f>
+.
+
+
+
+*Clickbait:* Woman finds a python behind her toilet
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly93d3cudXBpLmNvb=
+S9PZGRfTmV3cy8yMDI0LzExLzA2L2JhbGwtcHl0aG9uLUNvbHVtYmlhLVNvdXRoLUNhcm9saW5h=
+LXNuYWtlLzY3ODE3MzA5Mjc1OTQvP3V0bV9zb3VyY2U9am9pbjE0NDAmdXRtX21lZGl1bT1lbWF=
+pbCZ1dG1fcGxhY2VtZW50PW5ld3NsZXR0ZXI/67456a0c2f068d0b710a8397Bdcafecc0>.
+(w/photo)
+
+
+
+*Historybook:* The Nobel Prize is established (1895); Bruce Lee born
+(1940); Jimi Hendrix born (1942); Mars 2, a Soviet space probe, is first
+human-made object to reach Mars (1971); LGBTQ+ rights activist Harvey Milk
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly9lbi53aWtpcGVka=
+WEub3JnL3dpa2kvSGFydmV5X01pbGs/67456a0c2f068d0b710a8397B39f5ccb7>
+is
+assassinated (1978).
+
+"It takes no money to respect the individual."
+
+- Harvey Milk
+
+*Why 1440? *The printing press was invented around the year 1440, spreading
+knowledge to the masses and changing the course of history. More facts: In
+every day, there are 1,440 minutes. We=E2=80=99re here to make each one cou=
+nt.
+
+
+
+*Send us your feedback at* hello@join1440.com and help us stay as unbiased
+as humanly possible. We=E2=80=99re ready to listen.
+
+
+
+*Interested in reaching intellectually curious readers like you?* To become
+a 1440 partner, apply here
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly9qb2luMTQ0MC5jb=
+20vcGFydG5lcg/67456a0c2f068d0b710a8397B7949f1a2>
+.
+
+1440 Media 222 W Merchandise Mart Plaza, Suite 1212 Chicago, IL 60654
+
+Copyright =C2=A9 2024, 1440 Media, All rights reserved.
+
+
+*Unsubscribe
+<https://link.join1440.com/oc/67456a0c2f068d0b710a8397memb7.2s5ps/6fafafdc>=
+*
+from this email or *update my subscription preferences
+<https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly9qb2luMTQ0MC5jb=
+20vcHJlZmVyZW5jZXM/67456a0c2f068d0b710a8397B670be76b>*
+.
+
+--000000000000da7b7b062818f60e
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div class=3D"gmail_quote gmail_quote_container"><br><div =
+class=3D"msg1350019980713633880"><u></u>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id=3D"m_1350019980713633880body" marginwidth=3D"0" marginheight=3D"0" =
+style=3D"font-family:Arial,sans-serif;font-size:0px;margin:0px;padding:0px;=
+background-color:rgb(244,244,244)">
+
+<div style=3D"background-color:rgb(244,244,244)">
+<table height=3D"100%" width=3D"100%" cellpadding=3D"0" cellspacing=3D"0" b=
+order=3D"0">
+<tbody><tr>
+<td valign=3D"top" align=3D"left">
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td width=3D"100%">
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td align=3D"center" width=3D"100%">
+
+<table class=3D"m_1350019980713633880width600 m_1350019980713633880main-con=
+tainer" cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" sty=
+le=3D"max-width:600px">
+<tbody><tr>
+<td width=3D"100%">
+
+<div style=3D"display:none;max-height:0px;overflow:hidden">Facts, without m=
+otives.</div><div><span><img src=3D"https://link.join1440.com/img/67456a0c2=
+f068d0b710a8397memb7.2s5ps/f766891b.gif" alt=3D"beacon"></span></div><table=
+ cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td align=3D"center" width=3D"100%">
+
+<table class=3D"m_1350019980713633880width600 m_1350019980713633880main-con=
+tainer" cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" sty=
+le=3D"max-width:600px">
+<tbody><tr>
+<td width=3D"100%">
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td valign=3D"top">
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-top:11px;padding-left:20px"><div style=
+=3D"font-family:Roboto,&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-seri=
+f;font-size:15px;color:rgb(19,19,19);line-height:22px;text-align:left"><h3 =
+style=3D"font-family:Roboto,&quot;Helvetica Neue&quot;,Helvetica,Arial,sans=
+-serif;font-size:12px;color:rgb(153,153,153);font-weight:normal;line-height=
+:18px;padding:0px;margin:0px;text-align:right"><span><a href=3D"https://lin=
+k.join1440.com/view/67456a0c2f068d0b710a8397memb7.2s5ps/e18e42d0" target=3D=
+"_blank">View email in browser</a>.</span></h3>
+</div>
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+</tbody></table>
+
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+</tbody></table>
+
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" styl=
+e=3D"background-color:transparent">
+<tbody><tr>
+<td align=3D"center" width=3D"100%">
+
+<table class=3D"m_1350019980713633880width600 m_1350019980713633880main-con=
+tainer" cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" sty=
+le=3D"max-width:600px">
+<tbody><tr>
+<td width=3D"100%">
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-top:10px">
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" bgco=
+lor=3D"#ffffff" style=3D"background-color:rgb(255,255,255)">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-top:20px;padding-right:20px;padding-lef=
+t:20px"><div></div>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td valign=3D"top" align=3D"center">
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" style=3D"max-width:=
+100%">
+<tbody><tr>
+<td valign=3D"top" align=3D"center" style=3D"padding-bottom:10px"><a href=
+=3D"https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly9qb2luMTQ0MC=
+5jb20vP3V0bV9zb3VyY2U9am9pbjE0NDAmdXRtX21lZGl1bT1lbWFpbA/67456a0c2f068d0b71=
+0a8397B0652468a" target=3D"_blank">
+<img src=3D"https://images.chamaileon.io/603e31c9224efc2a1990854e/603e31c92=
+24efc4aca908558/1707233097279_1440Brandmark.png" width=3D"155" height=3D"71=
+" alt=3D"" border=3D"0" style=3D"display:block;font-size:14px;max-width:100=
+%;height:auto">
+</a>
+</td>
+</tr>
+</tbody></table>
+
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td style=3D"padding-top:10px;padding-bottom:10px">
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" styl=
+e=3D"border-top:2px solid rgb(0,0,0)">
+<tbody><tr>
+<td style=3D"font-size:0px;line-height:0">=C2=A0
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+</tbody></table>
+
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td align=3D"center" width=3D"100%">
+
+<table class=3D"m_1350019980713633880width600 m_1350019980713633880main-con=
+tainer" cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" sty=
+le=3D"max-width:600px">
+<tbody><tr>
+<td width=3D"100%">
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" bgco=
+lor=3D"#ffffff" style=3D"background-color:rgb(255,255,255)">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-right:20px;padding-bottom:10px;padding-=
+left:20px"><div></div><table cellpadding=3D"0" cellspacing=3D"0" border=3D"=
+0" width=3D"100%" style=3D"background-color:rgb(255,255,255)">
+<tbody><tr>
+<td valign=3D"top" width=3D"50%">
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-top:8px;padding-right:10px;padding-bott=
+om:5px;padding-left:10px"><div style=3D"font-family:Roboto,&quot;Helvetica =
+Neue&quot;,Helvetica,Arial,sans-serif;font-size:12px;color:rgb(0,0,0);font-=
+weight:normal;line-height:20px;letter-spacing:normal;text-align:right"><p s=
+tyle=3D"padding:0;margin:0"><span><strong>In partnership with</strong></spa=
+n></p></div>
+</td>
+</tr>
+</tbody></table>
+</td>
+<td valign=3D"top" width=3D"50%">
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td valign=3D"top" align=3D"left">
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" style=3D"max-width:=
+100%">
+<tbody><tr>
+<td valign=3D"top" align=3D"left" style=3D"padding-top:2px;padding-right:10=
+px"><a href=3D"https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly9=
+idXRjaGVyYm94LnB4Zi5pby9jLzEyNjAwMTkvMjE3MzAyMi8xNjQxOQ/67456a0c2f068d0b710=
+a8397Bb61ef777" target=3D"_blank">
+<img src=3D"https://images.chamaileon.io/603e31c9224efc2a1990854e/61eed7546=
+e30ed8c112485be/1661971353941_ButcherBox.png" width=3D"91" height=3D"35" al=
+t=3D"" border=3D"0" style=3D"display:block;font-size:14px;max-width:100%;he=
+ight:auto">
+</a>
+</td>
+</tr>
+</tbody></table>
+
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+</tbody></table><div></div>
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" bgco=
+lor=3D"#ffffff" style=3D"background-color:rgb(255,255,255)">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-right:20px;padding-bottom:10px;padding-=
+left:20px">
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" bgco=
+lor=3D"#ffffff" style=3D"background-color:rgb(255,255,255)">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-bottom:10px"><div style=3D"font-family:=
+Roboto,&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;font-size:14px=
+;color:rgb(0,0,0);font-weight:normal;line-height:20px;letter-spacing:normal=
+;text-align:left"><p style=3D"margin-left:0px;margin-top:0px;margin-right:0=
+px;margin-bottom:10px;padding:0"><span><strong>Good morning.=C2=A0It&#39;s =
+Wednesday, Nov. 27</strong>,=C2=A0and we&#39;re covering travel and eating =
+trends for Thanksgiving Day 2024, a proposed change to weight-loss medicine=
+ coverage, and much more. First time reading? Join over 4 million=C2=A0inte=
+llectually curious readers. <strong><a href=3D"https://link.join1440.com/cl=
+ick/37633651.4673008/aHR0cHM6Ly9qb2luMTQ0MC5jb20vP3V0bV9zb3VyY2U9am9pbjE0ND=
+AmdXRtX21lZGl1bT1lbWFpbCZ1dG1fY2FtcGFpZ249ZnQy/67456a0c2f068d0b710a8397C8fc=
+0c7ad" style=3D"text-decoration:underline!important;color:rgb(0,0,238)!impo=
+rtant" target=3D"_blank"><font style=3D"color:rgb(0,0,238)">Sign up here</f=
+ont></a></strong>.</span></p>
+<p style=3D"margin-left:0px;margin-top:0px;margin-right:0px;margin-bottom:1=
+0px;padding:0"><span><strong>Don=E2=80=99t keep us a secret</strong>: <stro=
+ng><a href=3D"mailto:hello@join1440.com?subject=3DBest%20newsletter%20for%2=
+0unbiased%20news&amp;body=3DHey%2C%0A%0AI%E2%80%99ve%20been%20reading%20144=
+0%2C%20and%20definitely%20think%20you%E2%80%99d%20enjoy%20it%20as%20well.%2=
+0It%20has%20all%20of%20the%20day%E2%80%99s%20top%20news%20and%20info%E2%80%=
+94sports%2C%20science%2C%20culture%2C%20politics%2C%20business%2C%20and%20m=
+ore%E2%80%94%20in%20a%20concise%20and%20impartial%20(and%20free)%205-minute=
+%20morning%20email.%20I%20learn%20something%20new%20every%20time%20I%20open=
+%20it.%20Check%20out%20the%20%231%20newsletter%20for%20unbiased%20news%20he=
+re%3A%0A%0Ahttps%3A%2F%2Fjoin1440.com%2F%3Futm_source%3Dnl_fwd_cta_main%26u=
+tm_medium%3Demail%26utm_campaign%3Dintro-share" style=3D"text-decoration:un=
+derline!important;color:rgb(0,0,238)!important" target=3D"_blank"><font sty=
+le=3D"color:rgb(0,0,238)">Share the email=C2=A0</font></a></strong>with fri=
+ends=C2=A0(<strong><a href=3D"https://link.join1440.com/click/37633651.4673=
+008/aHR0cHM6Ly9qb2luMTQ0MC5jb20vP3V0bV9zb3VyY2U9am9pbjE0NDAmdXRtX21lZGl1bT1=
+ubF9zaGFyZV9zdGFydCZ1dG1fY2FtcGFpZ249aW50cm8tc2hhcmUmc2hhcmU9dHJ1ZQ/67456a0=
+c2f068d0b710a8397D55ceb8dc" style=3D"text-decoration:underline!important;co=
+lor:rgb(0,0,238)!important" target=3D"_blank"><font style=3D"color:rgb(0,0,=
+238)">copy=C2=A0URL=C2=A0here</font></a></strong>)</span></p>
+<p style=3D"margin-left:0px;margin-top:0px;margin-right:0px;margin-bottom:1=
+0px;padding:0"><span>And, as always, send us feedback at=C2=A0<strong><a hr=
+ef=3D"mailto:hello@join1440.com" style=3D"text-decoration:underline!importa=
+nt;color:rgb(0,0,238)!important" target=3D"_blank"><font style=3D"color:rgb=
+(0,0,238)">hello@join1440.com</font></a></strong>.</span></p>
+<p style=3D"padding:0;margin:0"><span><em>Editor&#39;s=C2=A0note:=C2=A0The=
+=C2=A01440=C2=A0staff will be off for Thanksgiving. We&#39;ll see you Satur=
+day=E2=80=94have a great holiday!</em></span></p></div>
+</td>
+</tr>
+</tbody></table>
+<div></div>
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+</tbody></table>
+
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" styl=
+e=3D"background-color:transparent">
+<tbody><tr>
+<td align=3D"center" width=3D"100%">
+
+<table class=3D"m_1350019980713633880width600 m_1350019980713633880main-con=
+tainer" cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" sty=
+le=3D"max-width:600px">
+<tbody><tr>
+<td width=3D"100%">
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-top:10px">
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" bgco=
+lor=3D"#ffffff" style=3D"background-color:rgb(255,255,255)">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-bottom:20px"><div></div>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td valign=3D"top" align=3D"left" style=3D"padding-top:20px;padding-right:3=
+0px;padding-left:20px">
+
+<a style=3D"display:inline-block;text-decoration:none">
+<span>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" bgcolor=3D"#efef6f"=
+ style=3D"background-color:rgb(239,239,111)">
+<tbody><tr>
+<td align=3D"center" style=3D"padding-top:2px;padding-right:8px;padding-bot=
+tom:2px;padding-left:8px">
+<span style=3D"font-family:Georgia,Times,&quot;Times New Roman&quot;,serif;=
+font-size:23px;line-height:32px;letter-spacing:normal;color:rgb(0,0,0)!impo=
+rtant">
+<font style=3D"color:rgb(0,0,0)">
+<span><span>Need To Know</span></span>
+</font>
+</span>
+</td>
+</tr>
+</tbody></table>
+</span>
+</a>
+
+<div style=3D"display:none">
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" bgcolor=3D"#efef6f"=
+ style=3D"background-color:rgb(239,239,111)">
+<tbody><tr>
+<td align=3D"center" style=3D"padding-top:2px;padding-right:8px;padding-bot=
+tom:2px;padding-left:8px">
+<a style=3D"font-family:Georgia,Times,&quot;Times New Roman&quot;,serif;fon=
+t-size:23px;line-height:32px;letter-spacing:normal;text-decoration:none;tex=
+t-align:center;color:rgb(0,0,0)!important">
+<span style=3D"font-family:Georgia,Times,&quot;Times New Roman&quot;,serif;=
+font-size:23px;line-height:32px;letter-spacing:normal;color:rgb(0,0,0)!impo=
+rtant">
+<font style=3D"color:rgb(0,0,0)">
+<span><span>Need To Know</span></span>
+</font>
+</span>
+</a>
+</td>
+</tr>
+</tbody></table>
+</div>
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td style=3D"padding-top:10px;padding-right:20px;padding-bottom:10px;paddin=
+g-left:20px">
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" styl=
+e=3D"border-top:2px solid rgb(0,0,0)">
+<tbody><tr>
+<td style=3D"font-size:0px;line-height:0">=C2=A0
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-top:7px;padding-right:20px;padding-bott=
+om:5px;padding-left:20px"><div style=3D"font-family:Georgia,Times,&quot;Tim=
+es New Roman&quot;,serif;font-size:23px;color:rgb(0,0,0);font-weight:normal=
+;line-height:32px;letter-spacing:normal;text-align:left"><p style=3D"paddin=
+g:0;margin:0">Thanksgiving Logistics</p></div>
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-top:12px;padding-right:20px;padding-bot=
+tom:10px;padding-left:20px"><div style=3D"font-family:Roboto,&quot;Helvetic=
+a Neue&quot;,Helvetica,Arial,sans-serif;font-size:15px;color:rgb(0,0,0);fon=
+t-weight:normal;line-height:22px;letter-spacing:normal;text-align:left"><p =
+style=3D"margin-left:0px;margin-top:0px;margin-right:0px;margin-bottom:0px;=
+padding:0"><span>A record <a href=3D"https://link.join1440.com/click/376336=
+51.4673008/aHR0cHM6Ly9uZXdzcm9vbS5hYWEuY29tLzIwMjQvMTEvbmVhcmx5LTgwLW1pbGxp=
+b24tYW1lcmljYW5zLWV4cGVjdGVkLXRvLXRyYXZlbC1vdmVyLXRoYW5rc2dpdmluZy8/67456a0=
+c2f068d0b710a8397B5f44edb6" style=3D"text-decoration:underline!important;co=
+lor:rgb(0,0,238)!important" target=3D"_blank"><font style=3D"color:rgb(0,0,=
+238)">80 million Americans</font></a>=C2=A0will travel 50 miles or more ove=
+r Thanksgiving weekend, the majority (a record 71.7 million) by car. Millio=
+ns more are <a href=3D"https://link.join1440.com/click/37633651.4673008/aHR=
+0cHM6Ly93d3cudHNhLmdvdi9uZXdzL3ByZXNzL3JlbGVhc2VzLzIwMjQvMTEvMTkvdHNhLXJlYW=
+RpZXMtYnVzaWVzdC10aGFua3NnaXZpbmctdHJhdmVsLXBlcmlvZC1yZWNvcmQtcHJvdmlkZXM/6=
+7456a0c2f068d0b710a8397Bd7550a07" style=3D"text-decoration:underline!import=
+ant;color:rgb(0,0,238)!important" target=3D"_blank"><font style=3D"color:rg=
+b(0,0,238)">expected to fly</font></a>, including a record-breaking 3 milli=
+on on Sunday alone.</span></p>
+<p style=3D"margin-left:0px;margin-top:0px;margin-right:0px;margin-bottom:0=
+px;padding:0"><span>=C2=A0</span></p>
+<p style=3D"margin-left:0px;margin-top:0px;margin-right:0px;margin-bottom:0=
+px;padding:0"><span>Over 80% of Americans will eat turkey (<a href=3D"https=
+://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly93d3cueW91dHViZS5jb20=
+vd2F0Y2g_dj1XVm9YNW9UcnN0UQ/67456a0c2f068d0b710a8397B31e1c5f9" style=3D"tex=
+t-decoration:underline!important;color:rgb(0,0,238)!important" target=3D"_b=
+lank"><font style=3D"color:rgb(0,0,238)">watch overview</font></a>), requir=
+ing an estimated 46 million birds to supply the feast. A recent survey sugg=
+ests mashed potatoes, bread rolls, and pie will be standard fare; macaroni =
+and cheese consumption is highly regionalized (<a href=3D"https://link.join=
+1440.com/click/37633651.4673008/aHR0cHM6Ly93d3cubmV3c3dlZWsuY29tL3RoYW5rc2d=
+pdmluZy1kaW5uZXItcG9sbC1tb3N0LWxlYXN0LXBvcHVsYXItZm9vZHMtMTk5MTA4MA/67456a0=
+c2f068d0b710a8397B0b46e46a" style=3D"text-decoration:underline!important;co=
+lor:rgb(0,0,238)!important" target=3D"_blank"><font style=3D"color:rgb(0,0,=
+238)">see map</font></a>). A holiday meal for 10 will cost $58 on average, =
+down 5% from last year and the lowest inflation-adjusted cost in the 39 yea=
+rs of the farmers&#39; survey (<a href=3D"https://link.join1440.com/click/3=
+7633651.4673008/aHR0cHM6Ly93d3cuZmIub3JnL21hcmtldC1pbnRlbC90aGFua3NnaXZpbmc=
+tZGlubmVyLWNvc3RzLWFyZS1kb3duLWFnYWlu/67456a0c2f068d0b710a8397B6f6cb461" st=
+yle=3D"text-decoration:underline!important;color:rgb(0,0,238)!important" ta=
+rget=3D"_blank"><font style=3D"color:rgb(0,0,238)">see charts</font></a>).<=
+/span></p>
+<p style=3D"margin-left:0px;margin-top:0px;margin-right:0px;margin-bottom:0=
+px;padding:0"><span>=C2=A0</span></p>
+<p style=3D"padding:0;margin:0"><span>Meteorologists are predicting a relat=
+ively <a href=3D"https://link.join1440.com/click/37633651.4673008/aHR0cHM6L=
+y93d3cudXNhdG9kYXkuY29tL3N0b3J5L25ld3MvbmF0aW9uLzIwMjQvMTEvMjYvdGhhbmtzZ2l2=
+aW5nLXdlYXRoZXItZm9yZWNhc3QtbGl2ZS11cGRhdGVzLXNub3ctdHJhdmVsLzc2NTg1NTI5MDA=
+3Lw/67456a0c2f068d0b710a8397Bb6a25f99" style=3D"text-decoration:underline!i=
+mportant;color:rgb(0,0,238)!important" target=3D"_blank"><font style=3D"col=
+or:rgb(0,0,238)">wet, chilly</font></a> Thanksgiving for half the country, =
+with snow in the Midwest and rain on the East Coast. A cold front will impa=
+ct close to 200 million Americans by Saturday. The Macy&#39;s Thanksgiving =
+Day Parade will take place rain or shine tomorrow in New York City (8:30 am=
+ ET, NBC). =C2=A0</span></p></div>
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td style=3D"padding:20px">
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" styl=
+e=3D"border-top:2px solid rgb(0,0,0)">
+<tbody><tr>
+<td style=3D"font-size:0px;line-height:0">=C2=A0
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-right:20px;padding-bottom:5px;padding-l=
+eft:20px"><div style=3D"font-family:Georgia,Times,&quot;Times New Roman&quo=
+t;,serif;font-size:23px;color:rgb(0,0,0);font-weight:normal;line-height:32p=
+x;letter-spacing:normal;text-align:left"><p style=3D"padding:0;margin:0">Pr=
+oposed Obesity Coverage</p></div>
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-top:12px;padding-right:20px;padding-bot=
+tom:10px;padding-left:20px"><div style=3D"font-family:Roboto,&quot;Helvetic=
+a Neue&quot;,Helvetica,Arial,sans-serif;font-size:15px;color:rgb(0,0,0);fon=
+t-weight:normal;line-height:22px;letter-spacing:normal;text-align:left"><p =
+style=3D"margin-left:0px;margin-top:0px;margin-right:0px;margin-bottom:0px;=
+padding:0"><span>The Biden administration introduced <a href=3D"https://lin=
+k.join1440.com/click/37633651.4673008/aHR0cHM6Ly93d3cuY25iYy5jb20vMjAyNC8xM=
+S8yNi9iaWRlbi1wcm9wb3Nlcy1tZWRpY2FyZS1hbmQtbWVkaWNhaWQtY292ZXItd2VpZ2h0LWxv=
+c3MtZHJ1Z3MuaHRtbA/67456a0c2f068d0b710a8397B4d2c8207" style=3D"text-decorat=
+ion:underline!important;color:rgb(0,0,238)!important" target=3D"_blank"><fo=
+nt style=3D"color:rgb(0,0,238)">a proposal</font></a> yesterday to expand M=
+edicare and Medicaid coverage to include popular weight-loss medications li=
+ke Wegovy and Zepbound. The initiative, led by the Department of Health and=
+ Human Services, would classify obesity as a treatable disease to reduce as=
+sociated health risks=C2=A0including heart disease and diabetes.</span></p>
+<p style=3D"margin-left:0px;margin-top:0px;margin-right:0px;margin-bottom:0=
+px;padding:0"><span>=C2=A0</span></p>
+<p style=3D"margin-left:0px;margin-top:0px;margin-right:0px;margin-bottom:0=
+px;padding:0"><span>Roughly <a href=3D"https://link.join1440.com/click/3763=
+3651.4673008/aHR0cHM6Ly93d3cuY2JzbmV3cy5jb20vbmV3cy9vYmVzaXR5LXJhdGUtdXMtYW=
+R1bHRzLWNkYy1kYXRhLW1hcC8/67456a0c2f068d0b710a8397B53b9b0f4" style=3D"text-=
+decoration:underline!important;color:rgb(0,0,238)!important" target=3D"_bla=
+nk"><font style=3D"color:rgb(0,0,238)">40% of Americans</font></a> are cons=
+idered clinically obese. Weight-loss drugs can reduce weight by as much as =
+15% to 25% by <a href=3D"https://link.join1440.com/click/37633651.4673008/a=
+HR0cHM6Ly9tY2IuaWxsaW5vaXMuZWR1L25ld3MvMjAyNC0wNy0wOS9ob3ctZG8tZHJ1Z3Mtb3pl=
+bXBpYy13b3JrLXdlaWdodC1sb3Nz/67456a0c2f068d0b710a8397B8bb08362" style=3D"te=
+xt-decoration:underline!important;color:rgb(0,0,238)!important" target=3D"_=
+blank"><font style=3D"color:rgb(0,0,238)">regulating appetite</font></a>, s=
+ignaling to the brain that the body is full, and reducing hunger. The propo=
+sed rule could reduce out-of-pocket costs for the drug=E2=80=94which can ex=
+ceed $1,000 per month=E2=80=94by up to 95% for over 7.4 million Medicare an=
+d Medicaid beneficiaries. The estimated cost to taxpayers is $35B over the =
+next decade.</span></p>
+<p style=3D"margin-left:0px;margin-top:0px;margin-right:0px;margin-bottom:0=
+px;padding:0"><span>=C2=A0</span></p>
+<p style=3D"padding:0;margin:0"><span>The rule would not be finalized until=
+ after President-elect Donald Trump takes office; his HHS pick,=C2=A0<a hre=
+f=3D"https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly93d3cudXNhd=
+G9kYXkuY29tL3N0b3J5L2xpZmUvaGVhbHRoLXdlbGxuZXNzLzIwMjQvMTEvMjYvYmlkZW4tcmZr=
+LWpyLW96ZW1waWMtd2Vnb3Z5LXdlaWdodC1sb3NzLW1lZGljYXRpb24vNzY1ODc0NTYwMDcv/67=
+456a0c2f068d0b710a8397B695e08ae" style=3D"text-decoration:underline!importa=
+nt;color:rgb(0,0,238)!important" target=3D"_blank"><font style=3D"color:rgb=
+(0,0,238)">Robert F. Kennedy Jr.</font></a>, has criticized the drugmakers,=
+ instead seeking to prioritize access to healthy nutrition.</span></p></div=
+>
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td style=3D"padding:20px">
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" styl=
+e=3D"border-top:2px solid rgb(0,0,0)">
+<tbody><tr>
+<td style=3D"font-size:0px;line-height:0">=C2=A0
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-right:20px;padding-bottom:5px;padding-l=
+eft:20px"><div style=3D"font-family:Georgia,Times,&quot;Times New Roman&quo=
+t;,serif;font-size:23px;color:rgb(0,0,0);font-weight:normal;line-height:32p=
+x;letter-spacing:normal;text-align:left"><p style=3D"padding:0;margin:0">Ti=
+t-for-Tat Tariffs</p></div>
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-top:12px;padding-right:20px;padding-bot=
+tom:10px;padding-left:20px"><div style=3D"font-family:Roboto,&quot;Helvetic=
+a Neue&quot;,Helvetica,Arial,sans-serif;font-size:15px;color:rgb(0,0,0);fon=
+t-weight:normal;line-height:22px;letter-spacing:normal;text-align:left"><p =
+style=3D"margin-left:0px;margin-top:0px;margin-right:0px;margin-bottom:0px;=
+padding:0"><span>Mexican President=C2=A0Claudia Sheinbaum threatened <a hre=
+f=3D"https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly9hcG5ld3MuY=
+29tL2FydGljbGUvbWV4aWNvLXRhcmlmZnMtdHJ1bXAtcmV0YWxpYXRlLXNoZWluYmF1bS1mYWMw=
+YjBjNmVlOGM0MjVhOTI4NDE4ZGU3MzMyYjc0YQ/67456a0c2f068d0b710a8397Bb90c575e" s=
+tyle=3D"text-decoration:underline!important;color:rgb(0,0,238)!important" t=
+arget=3D"_blank"><font style=3D"color:rgb(0,0,238)">retaliatory tariffs</fo=
+nt></a> on US goods yesterday, in response to President-elect Donald Trump&=
+#39;s pledged 25% tariffs if Mexico fails to halt the flow of drugs and mig=
+rants into the US. Trump also indicated he would impose a 25% tariff on goo=
+ds from Canada and an additional 10%=C2=A0tariff on goods from China.=C2=A0=
+</span></p>
+<p style=3D"margin-left:0px;margin-top:0px;margin-right:0px;margin-bottom:0=
+px;padding:0"><span>=C2=A0</span></p>
+<p style=3D"margin-left:0px;margin-top:0px;margin-right:0px;margin-bottom:0=
+px;padding:0"><span>The US is the world&#39;s largest importer, with Mexico=
+ topping its list of trading partners, followed by Canada and China (see li=
+st=C2=A0<a href=3D"https://link.join1440.com/click/37633651.4673008/aHR0cHM=
+6Ly93d3cuY2Vuc3VzLmdvdi9mb3JlaWduLXRyYWRlL3N0YXRpc3RpY3MvaGlnaGxpZ2h0cy90b3=
+B5ci5odG1s/67456a0c2f068d0b710a8397B0e01e14b" style=3D"text-decoration:unde=
+rline!important;color:rgb(0,0,238)!important" target=3D"_blank"><font style=
+=3D"color:rgb(0,0,238)">here</font></a>). The three North American countrie=
+s exchanged $1.8T worth of goods in 2022; annual US trade with China is $60=
+0B.=C2=A0The US is Mexico&#39;s top importer, with cars, food, and beer amo=
+ng the goods most likely to be impacted by tariffs. Canada supplied 60% of =
+the US&#39; crude oil, among other goods.</span></p>
+<p style=3D"margin-left:0px;margin-top:0px;margin-right:0px;margin-bottom:0=
+px;padding:0"><span>=C2=A0</span></p>
+<p style=3D"padding:0;margin:0"><span>The announcement shook up global mark=
+ets yesterday, with automakers&#39; stocks especially hard hit. Canadian an=
+d Mexican currencies fell against the value of the dollar.=C2=A0</span></p>=
+</div>
+</td>
+</tr>
+</tbody></table>
+<div></div>
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+</tbody></table>
+
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td align=3D"center" width=3D"100%">
+
+<table class=3D"m_1350019980713633880width600 m_1350019980713633880main-con=
+tainer" cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" sty=
+le=3D"max-width:600px">
+<tbody><tr>
+<td width=3D"100%">
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-top:10px">
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td valign=3D"top"><div></div>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" bgco=
+lor=3D"#ffffff" style=3D"background-color:rgb(255,255,255)">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-top:5px;padding-right:20px;padding-left=
+:20px"><div style=3D"font-family:Roboto,&quot;Helvetica Neue&quot;,Helvetic=
+a,Arial,sans-serif;font-size:15px;color:rgb(0,0,0);font-weight:normal;line-=
+height:22px;letter-spacing:normal;text-align:left"><p style=3D"padding:0;ma=
+rgin:0"><span><span style=3D"font-size:10px"><strong><em>In partnership wit=
+h ButcherBox</em></strong></span></span></p></div>
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" bgco=
+lor=3D"#ffffff" style=3D"background-color:rgb(255,255,255)">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-top:10px;padding-right:20px;padding-bot=
+tom:3px;padding-left:20px"><div style=3D"font-family:Georgia,Times,&quot;Ti=
+mes New Roman&quot;,serif;font-size:23px;color:rgb(0,0,0);font-weight:norma=
+l;line-height:32px;letter-spacing:normal;text-align:left"><p style=3D"paddi=
+ng:0;margin:0">Free Steak For 1 Year</p></div>
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" bgco=
+lor=3D"#ffffff" style=3D"background-color:rgb(255,255,255)">
+<tbody><tr>
+<td style=3D"padding-top:5px;padding-right:18px;padding-bottom:10px;padding=
+-left:20px">
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" styl=
+e=3D"border-top:2px solid rgb(0,0,0)">
+<tbody><tr>
+<td style=3D"font-size:0px;line-height:0">=C2=A0
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" bgco=
+lor=3D"#ffffff" style=3D"background-color:rgb(255,255,255)">
+<tbody><tr>
+<td valign=3D"top">
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td valign=3D"top" align=3D"center">
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" style=3D"max-width:=
+100%">
+<tbody><tr>
+<td valign=3D"top" align=3D"center" style=3D"padding-bottom:10px"><a href=
+=3D"https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly9idXRjaGVyYm=
+94LnB4Zi5pby9jLzEyNjAwMTkvMjE3MzAyMi8xNjQxOQ/67456a0c2f068d0b710a8397Cb61ef=
+777" target=3D"_blank">
+<img src=3D"https://images.chamaileon.io/603e31c9224efc2a1990854e/61eed7546=
+e30ed8c112485be/1661971353941_ButcherBox.png" width=3D"136" height=3D"53" a=
+lt=3D"" border=3D"0" style=3D"display:block;font-size:14px;max-width:100%;h=
+eight:auto">
+</a>
+</td>
+</tr>
+</tbody></table>
+
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" bgco=
+lor=3D"#ffffff" style=3D"background-color:rgb(255,255,255)">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-right:20px;padding-bottom:10px;padding-=
+left:20px"><div style=3D"font-family:Roboto,&quot;Helvetica Neue&quot;,Helv=
+etica,Arial,sans-serif;font-size:15px;color:rgb(0,0,0);font-weight:normal;l=
+ine-height:22px;letter-spacing:normal;text-align:left"><p style=3D"margin-l=
+eft:0px;margin-top:0px;margin-right:0px;margin-bottom:0px;padding:0"><span>=
+...=C2=A0<em>Yes, you read that right.</em> New=C2=A0ButcherBox=C2=A0custom=
+ers will <a href=3D"https://link.join1440.com/click/37633651.4673008/aHR0cH=
+M6Ly9idXRjaGVyYm94LnB4Zi5pby9jLzEyNjAwMTkvMjE3MzAyMi8xNjQxOQ/67456a0c2f068d=
+0b710a8397Db61ef777" style=3D"text-decoration:underline!important;color:rgb=
+(0,0,238)!important" target=3D"_blank"><font style=3D"color:rgb(0,0,238)"><=
+strong>get their choice of=C2=A0NY strip, filet mignon, or ribeye in every =
+box for a year=E2=80=94for free</strong></font></a> (a $336+ value).</span>=
+</p>
+<p style=3D"margin-left:0px;margin-top:0px;margin-right:0px;margin-bottom:0=
+px;padding:0"><span>=C2=A0</span></p>
+<p style=3D"margin-left:0px;margin-top:0px;margin-right:0px;margin-bottom:0=
+px;padding:0"><span>We know that these days, it feels nearly impossible to =
+find quality, affordable meat and seafood at the grocery store. And figurin=
+g out where exactly it came from?=C2=A0<em>Good luck</em>.=C2=A0But with=C2=
+=A0ButcherBox, each box of free-range, antibiotic-free meats is <a href=3D"=
+https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly9idXRjaGVyYm94Ln=
+B4Zi5pby9jLzEyNjAwMTkvMjE3MzAyMi8xNjQxOQ/67456a0c2f068d0b710a8397Eb61ef777"=
+ style=3D"text-decoration:underline!important;color:rgb(0,0,238)!important"=
+ target=3D"_blank"><font style=3D"color:rgb(0,0,238)"><strong>traceable bac=
+k to the farm it came from</strong></font></a>, and at rates that won=E2=80=
+=99t break the bank. Grass-fed beef, free-range organic chicken, crate-free=
+ pork, wild-caught seafood =E2=80=A6=C2=A0ButcherBox=C2=A0lets you pick and=
+ choose, and delivers them directly to your door. It=E2=80=99s the simpler =
+way to <a href=3D"https://link.join1440.com/click/37633651.4673008/aHR0cHM6=
+Ly9idXRjaGVyYm94LnB4Zi5pby9jLzEyNjAwMTkvMjE3MzAyMi8xNjQxOQ/67456a0c2f068d0b=
+710a8397Fb61ef777" style=3D"text-decoration:underline!important;color:rgb(0=
+,0,238)!important" target=3D"_blank"><font style=3D"color:rgb(0,0,238)"><st=
+rong>feed your family high-quality protein</strong></font></a>.</span></p>
+<p style=3D"margin-left:0px;margin-top:0px;margin-right:0px;margin-bottom:0=
+px;padding:0"><span>=C2=A0</span></p>
+<p style=3D"padding:0;margin:0"><span>For the next 48 hours, <a href=3D"htt=
+ps://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly9idXRjaGVyYm94LnB4Z=
+i5pby9jLzEyNjAwMTkvMjE3MzAyMi8xNjQxOQ/67456a0c2f068d0b710a8397Gb61ef777" st=
+yle=3D"text-decoration:underline!important;color:rgb(0,0,238)!important" ta=
+rget=3D"_blank"><font style=3D"color:rgb(0,0,238)"><strong>sign up for=C2=
+=A0ButcherBox</strong></font></a>, and you=E2=80=99ll score a mouth-waterin=
+g deal. Get your favorite cut of steak free in every box for a year (choose=
+ between ribeye, filet mignon, and NY strip), <a href=3D"https://link.join1=
+440.com/click/37633651.4673008/aHR0cHM6Ly9idXRjaGVyYm94LnB4Zi5pby9jLzEyNjAw=
+MTkvMjE3MzAyMi8xNjQxOQ/67456a0c2f068d0b710a8397Hb61ef777" style=3D"text-dec=
+oration:underline!important;color:rgb(0,0,238)!important" target=3D"_blank"=
+><font style=3D"color:rgb(0,0,238)"><strong>PLUS $100 off ($20 off your fir=
+st 5 boxes!) with code 1440NOVEMBER.</strong></font></a></span></p></div>
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" bgco=
+lor=3D"#ffffff" style=3D"background-color:rgb(255,255,255)">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-right:20px;padding-bottom:10px;padding-=
+left:20px"><div style=3D"font-family:Roboto,&quot;Helvetica Neue&quot;,Helv=
+etica,Arial,sans-serif;font-size:15px;color:rgb(0,0,0);font-weight:normal;l=
+ine-height:22px;letter-spacing:normal;text-align:center"><p style=3D"paddin=
+g:0;margin:0"><span><span style=3D"font-size:10px"><em>Please support our s=
+ponsors!</em></span></span></p></div>
+</td>
+</tr>
+</tbody></table>
+<div></div>
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-top:10px">
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td valign=3D"top">
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" bgco=
+lor=3D"#ffffff" style=3D"background-color:rgb(255,255,255)">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-right:20px;padding-left:20px">
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td valign=3D"top" align=3D"left" style=3D"padding-top:20px">
+
+<a style=3D"display:inline-block;text-decoration:none">
+<span>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" bgcolor=3D"#7edcf2"=
+ style=3D"background-color:rgb(126,220,242)">
+<tbody><tr>
+<td align=3D"center" style=3D"padding-top:2px;padding-right:8px;padding-bot=
+tom:2px;padding-left:8px">
+<span style=3D"font-family:Georgia,Times,&quot;Times New Roman&quot;,serif;=
+font-size:23px;line-height:33px;letter-spacing:normal;color:rgb(0,0,0)!impo=
+rtant">
+<font style=3D"color:rgb(0,0,0)">
+<span><span>In The Know</span></span>
+</font>
+</span>
+</td>
+</tr>
+</tbody></table>
+</span>
+</a>
+
+<div style=3D"display:none">
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" bgcolor=3D"#7edcf2"=
+ style=3D"background-color:rgb(126,220,242)">
+<tbody><tr>
+<td align=3D"center" style=3D"padding-top:2px;padding-right:8px;padding-bot=
+tom:2px;padding-left:8px">
+<a style=3D"font-family:Georgia,Times,&quot;Times New Roman&quot;,serif;fon=
+t-size:23px;line-height:33px;letter-spacing:normal;text-decoration:none;tex=
+t-align:center;color:rgb(0,0,0)!important">
+<span style=3D"font-family:Georgia,Times,&quot;Times New Roman&quot;,serif;=
+font-size:23px;line-height:33px;letter-spacing:normal;color:rgb(0,0,0)!impo=
+rtant">
+<font style=3D"color:rgb(0,0,0)">
+<span><span>In The Know</span></span>
+</font>
+</span>
+</a>
+</td>
+</tr>
+</tbody></table>
+</div>
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td style=3D"padding-top:10px;padding-bottom:10px">
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" styl=
+e=3D"border-top:2px solid rgb(0,0,0)">
+<tbody><tr>
+<td style=3D"font-size:0px;line-height:0">=C2=A0
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" bgco=
+lor=3D"#ffffff" style=3D"background-color:rgb(255,255,255)">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-right:20px;padding-left:20px"><div></di=
+v>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-top:7px;padding-bottom:5px"><div style=
+=3D"font-family:Georgia,Times,&quot;Times New Roman&quot;,serif;font-size:2=
+3px;color:rgb(0,0,0);font-weight:normal;line-height:32px;letter-spacing:nor=
+mal;text-align:left"><p style=3D"padding:0;margin:0">Sports, Entertainment,=
+ &amp; Culture</p></div>
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-top:10px;padding-bottom:10px"><div styl=
+e=3D"font-family:Roboto,&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-ser=
+if;font-size:15px;color:rgb(0,0,0);font-weight:normal;line-height:22px;lett=
+er-spacing:normal;text-align:left"><p style=3D"padding:0;margin:0"><span><s=
+pan style=3D"font-size:18px"><strong><span style=3D"color:rgb(126,220,242)"=
+>&gt;</span></strong>=C2=A0</span><strong>Disney=C2=A0settles $43M</strong>=
+ class-action lawsuit with 9,000 female workers alleging they were paid les=
+s than their male counterparts in comparable roles (<a href=3D"https://link=
+.join1440.com/click/37633651.4673008/aHR0cHM6Ly93d3cuaG9sbHl3b29kcmVwb3J0ZX=
+IuY29tL2J1c2luZXNzL2J1c2luZXNzLW5ld3MvZGlzbmV5LTQzLW1pbGxpb24tY2xhc3MtYWN0a=
+W9uLXNldHRsZW1lbnQtd29tZW5zLXBheS1kaXNwYXJpdGllcy0xMjM2MDcxNzgxLz91dG1fc291=
+cmNlPWpvaW4xNDQwJnV0bV9tZWRpdW09ZW1haWwmdXRtX3BsYWNlbWVudD1uZXdzbGV0dGVy/67=
+456a0c2f068d0b710a8397B0262b735" style=3D"text-decoration:underline!importa=
+nt;color:rgb(0,0,238)!important" target=3D"_blank"><font style=3D"color:rgb=
+(0,0,238)">More</font></a>)=C2=A0</span></p></div>
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-top:10px;padding-bottom:10px"><div styl=
+e=3D"font-family:Roboto,&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-ser=
+if;font-size:15px;color:rgb(0,0,0);font-weight:normal;line-height:22px;lett=
+er-spacing:normal;text-align:left"><p style=3D"padding:0;margin:0"><span><s=
+pan style=3D"font-size:18px"><strong><span style=3D"color:rgb(126,220,242)"=
+>&gt;</span></strong>=C2=A0</span><strong>Jim Abrahams</strong>, film direc=
+tor and writer best known for &quot;Airplane!&quot; and &quot;Naked Gun&quo=
+t; series, dies at age 80 (<a href=3D"https://link.join1440.com/click/37633=
+651.4673008/aHR0cHM6Ly92YXJpZXR5LmNvbS8yMDI0L2ZpbG0vb2JpdHVhcmllcy1wZW9wbGU=
+tbmV3cy9qaW0tYWJyYWhhbXMtZGVhZC1haXJwbGFuZS1uYWtlZC1ndW4taG90LXNob3RzLTEyMz=
+YyMjM2ODMvP3V0bV9zb3VyY2U9am9pbjE0NDAmdXRtX21lZGl1bT1lbWFpbCZ1dG1fcGxhY2VtZ=
+W50PW5ld3NsZXR0ZXI/67456a0c2f068d0b710a8397B0bb486eb" style=3D"text-decorat=
+ion:underline!important;color:rgb(0,0,238)!important" target=3D"_blank"><fo=
+nt style=3D"color:rgb(0,0,238)">More</font></a>) | <strong>French-Japanese =
+TV series </strong>&quot;Les Gouttes de Dieu=C2=A0(Drops of God)&quot; wins=
+ best drama at 2024 International Emmy Awards (<a href=3D"https://link.join=
+1440.com/click/37633651.4673008/aHR0cHM6Ly9kZWFkbGluZS5jb20vMjAyNC8xMS8yMDI=
+0LWludGVybmF0aW9uYWwtZW1teS1hd2FyZHMtd2lubmVycy1saXN0LTEyMzYxODc0MTAvP3V0bV=
+9zb3VyY2U9am9pbjE0NDAmdXRtX21lZGl1bT1lbWFpbCZ1dG1fcGxhY2VtZW50PW5ld3NsZXR0Z=
+XI/67456a0c2f068d0b710a8397B6ffc12b5" style=3D"text-decoration:underline!im=
+portant;color:rgb(0,0,238)!important" target=3D"_blank"><font style=3D"colo=
+r:rgb(0,0,238)">More</font></a>)</span></p></div>
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-top:10px;padding-bottom:10px"><div styl=
+e=3D"font-family:Roboto,&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-ser=
+if;font-size:15px;color:rgb(0,0,0);font-weight:normal;line-height:22px;lett=
+er-spacing:normal;text-align:left"><p style=3D"padding:0;margin:0"><span><s=
+pan style=3D"font-size:18px"><strong><span style=3D"color:rgb(126,220,242)"=
+>&gt;</span></strong>=C2=A0</span><strong>Former show host Wendy Williams</=
+strong> reportedly &quot;permanently=C2=A0disabled and legally incapacitate=
+d&quot; amid dementia battle; Williams revealed her dementia diagnosis earl=
+ier this year=C2=A0(<a href=3D"https://link.join1440.com/click/37633651.467=
+3008/aHR0cHM6Ly9wZW9wbGUuY29tL3dlbmR5LXdpbGxpYW1zLWRlZW1lZC1wZXJtYW5lbnRseS=
+1kaXNhYmxlZC1sZWdhbGx5LWluY2FwYWNpdGF0ZWQtZnJvbS1kZW1lbnRpYS1kaWFnbm9zaXMtY=
+2xhaW1zLWd1YXJkaWFuLTg3NTIyOTU_dXRtX3NvdXJjZT1qb2luMTQ0MCZ1dG1fbWVkaXVtPWVt=
+YWlsJnV0bV9wbGFjZW1lbnQ9bmV3c2xldHRlcg/67456a0c2f068d0b710a8397B30d68c4e" s=
+tyle=3D"text-decoration:underline!important;color:rgb(0,0,238)!important" t=
+arget=3D"_blank"><font style=3D"color:rgb(0,0,238)">More</font></a>)=C2=A0<=
+/span></p></div>
+</td>
+</tr>
+</tbody></table>
+<div></div>
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" bgco=
+lor=3D"#ffffff" style=3D"background-color:rgb(255,255,255)">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-right:20px;padding-left:20px">
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td style=3D"padding-top:10px;padding-bottom:10px">
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" styl=
+e=3D"border-top:2px solid rgb(0,0,0)">
+<tbody><tr>
+<td style=3D"font-size:0px;line-height:0">=C2=A0
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" bgco=
+lor=3D"#ffffff" style=3D"background-color:rgb(255,255,255)">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-right:20px;padding-left:20px"><div></di=
+v>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-top:10px;padding-bottom:5px"><div style=
+=3D"font-family:Georgia,Times,&quot;Times New Roman&quot;,serif;font-size:2=
+3px;color:rgb(0,0,0);font-weight:normal;line-height:32px;letter-spacing:nor=
+mal;text-align:left"><p style=3D"padding:0;margin:0">Science &amp; Technolo=
+gy</p></div>
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-top:10px;padding-bottom:10px"><div styl=
+e=3D"font-family:Roboto,&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-ser=
+if;font-size:15px;color:rgb(0,0,0);font-weight:normal;line-height:22px;lett=
+er-spacing:normal;text-align:left"><p style=3D"padding:0;margin:0"><span><s=
+pan style=3D"font-size:18px"><strong><span style=3D"color:rgb(126,220,242)"=
+>&gt;</span></strong>=C2=A0</span><strong>Chipmaker Intel awarded</strong>=
+=C2=A0close to $7.9B to support building and expansion of semiconductor man=
+ufacturing facilities in Arizona, New Mexico, Oregon, and Ohio; funds come =
+from the 2022 CHIPS Act (<a href=3D"https://link.join1440.com/click/3763365=
+1.4673008/aHR0cHM6Ly93d3cudGhldmVyZ2UuY29tLzIwMjQvMTEvMjYvMjQzMDYzNDgvaW50Z=
+WwtYXdhcmRlZC04LWJpbGxpb24tY2hpcHMtYWN0LWZ1bmRpbmctdXMtY2hpcG1ha2luZz91dG1f=
+c291cmNlPWpvaW4xNDQwJnV0bV9tZWRpdW09ZW1haWwmdXRtX3BsYWNlbWVudD1uZXdzbGV0dGV=
+y/67456a0c2f068d0b710a8397B39d91c92" style=3D"text-decoration:underline!imp=
+ortant;color:rgb(0,0,238)!important" target=3D"_blank"><font style=3D"color=
+:rgb(0,0,238)">More</font></a>)=C2=A0</span></p></div>
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-top:10px;padding-bottom:10px"><div styl=
+e=3D"font-family:Roboto,&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-ser=
+if;font-size:15px;color:rgb(0,0,0);font-weight:normal;line-height:22px;lett=
+er-spacing:normal;text-align:left"><p style=3D"padding:0;margin:0"><span><s=
+pan style=3D"font-size:18px"><strong><span style=3D"color:rgb(126,220,242)"=
+>&gt;</span></strong>=C2=A0</span><strong>Cancer researchers discover</stro=
+ng>=C2=A0how low glucose environments around tumors help cancer cells evade=
+ chemotherapy drugs; findings may lead to more effective treatments (<a hre=
+f=3D"https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly9ueXVsYW5nb=
+25lLm9yZy9uZXdzL3N0dWR5LWRldGFpbHMtaG93LWNhbmNlci1jZWxscy1mZW5kLXN0YXJ2YXRp=
+b24tZGVhdGgtY2hlbW90aGVyYXB5P3V0bV9zb3VyY2U9am9pbjE0NDAmdXRtX21lZGl1bT1lbWF=
+pbCZ1dG1fcGxhY2VtZW50PW5ld3NsZXR0ZXI/67456a0c2f068d0b710a8397B359b7d06" sty=
+le=3D"text-decoration:underline!important;color:rgb(0,0,238)!important" tar=
+get=3D"_blank"><font style=3D"color:rgb(0,0,238)">More</font></a>)=C2=A0</s=
+pan></p></div>
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-top:10px;padding-bottom:10px"><div styl=
+e=3D"font-family:Roboto,&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-ser=
+if;font-size:15px;color:rgb(0,0,0);font-weight:normal;line-height:22px;lett=
+er-spacing:normal;text-align:left"><p style=3D"padding:0;margin:0"><span><s=
+pan style=3D"font-size:18px"><strong><span style=3D"color:rgb(126,220,242)"=
+>&gt;</span></strong>=C2=A0</span><strong>Scientists transplant </strong>pi=
+g heart valve into a rodent with the assistance of human skin cells reprogr=
+ammed into heart valve cells; the procedure paves the way for similar organ=
+ transplants to humans, with roughly 30,000 Americans dying each year from =
+aortic heart valve failure (<a href=3D"https://link.join1440.com/click/3763=
+3651.4673008/aHR0cHM6Ly9uZXdzLm5vcnRoZWFzdGVybi5lZHUvMjAyNC8xMS8yNi9vcmdhbi=
+10cmFuc3BsYW50LXJlc2VhcmNoLXBpZ3MtaGVhcnQtdmFsdmUvP3V0bV9zb3VyY2U9am9pbjE0N=
+DAmdXRtX21lZGl1bT1lbWFpbCZ1dG1fcGxhY2VtZW50PW5ld3NsZXR0ZXI/67456a0c2f068d0b=
+710a8397Bd1059ceb" style=3D"text-decoration:underline!important;color:rgb(0=
+,0,238)!important" target=3D"_blank"><font style=3D"color:rgb(0,0,238)">Mor=
+e</font></a>)=C2=A0</span></p></div>
+</td>
+</tr>
+</tbody></table>
+<div></div>
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" bgco=
+lor=3D"#ffffff" style=3D"background-color:rgb(255,255,255)">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-right:20px;padding-left:20px">
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-top:10px;padding-bottom:10px">
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" bgco=
+lor=3D"#f9f9f9" style=3D"background-color:rgb(249,249,249)">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-top:8px;padding-right:10px;padding-bott=
+om:2px;padding-left:10px"><div></div>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" bgco=
+lor=3D"transparent" style=3D"background-color:transparent">
+<tbody><tr>
+<td valign=3D"top"><div style=3D"font-family:Roboto,&quot;Helvetica Neue&qu=
+ot;,Helvetica,Arial,sans-serif;font-size:20px;color:rgb(0,0,0);font-weight:=
+normal;line-height:20px;letter-spacing:normal;text-align:left"><p style=3D"=
+padding:0;margin:0"><span><span style=3D"font-size:10px"><strong><em>In par=
+tnership with NativePath</em></strong></span></span></p></div>
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td valign=3D"top" align=3D"left" style=3D"padding-top:10px;padding-bottom:=
+10px">
+
+<a style=3D"display:inline-block;text-decoration:none">
+<span>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" bgcolor=3D"#7edcf2"=
+ style=3D"background-color:rgb(126,220,242)">
+<tbody><tr>
+<td align=3D"center" style=3D"padding-right:4px;padding-left:4px">
+<span style=3D"font-family:Roboto,&quot;Helvetica Neue&quot;,Helvetica,Aria=
+l,sans-serif;font-size:18px;line-height:24px;letter-spacing:normal;color:rg=
+b(0,0,0)!important">
+<font style=3D"color:rgb(0,0,0)">
+<span><strong>Your Most Abundant Protein</strong></span>
+</font>
+</span>
+</td>
+</tr>
+</tbody></table>
+</span>
+</a>
+
+<div style=3D"display:none">
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" bgcolor=3D"#7edcf2"=
+ style=3D"background-color:rgb(126,220,242)">
+<tbody><tr>
+<td align=3D"center" style=3D"padding-right:4px;padding-left:4px">
+<a style=3D"font-family:Roboto,&quot;Helvetica Neue&quot;,Helvetica,Arial,s=
+ans-serif;font-size:18px;line-height:24px;letter-spacing:normal;text-decora=
+tion:none;text-align:center;color:rgb(0,0,0)!important">
+<span style=3D"font-family:Roboto,&quot;Helvetica Neue&quot;,Helvetica,Aria=
+l,sans-serif;font-size:18px;line-height:24px;letter-spacing:normal;color:rg=
+b(0,0,0)!important">
+<font style=3D"color:rgb(0,0,0)">
+<span><strong>Your Most Abundant Protein</strong></span>
+</font>
+</span>
+</a>
+</td>
+</tr>
+</tbody></table>
+</div>
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-top:5px;padding-bottom:5px"><div style=
+=3D"font-family:Roboto,&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-seri=
+f;font-size:15px;color:rgb(0,0,0);font-weight:normal;line-height:22px;lette=
+r-spacing:normal;text-align:left"><p style=3D"margin-left:0px;margin-top:0p=
+x;margin-right:0px;margin-bottom:0px;padding:0"><span>Did you know the body=
+ produces 1%-2% less collagen per year, starting in your 30s? As <a href=3D=
+"https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly9mYi5uYXRpdmVwY=
+XRoLmNvbS9yZC9yLnBocD9zaWQ9MTcyMiZwdWI9MjQwNjk1JmMxPTIwMjQxMTI3LVJFTVNFQ09O=
+REFSWS1lc3QxNzUwMCZjMj0mYzM9/67456a0c2f068d0b710a8397B6df290bb" style=3D"te=
+xt-decoration:underline!important;color:rgb(0,0,238)!important" target=3D"_=
+blank"><font style=3D"color:rgb(0,0,238)"><strong>the most abundant protein=
+ in the body</strong></font></a>, this contributes to wrinkles, joint pain,=
+ and dwindling bones.=C2=A0</span></p>
+<p style=3D"margin-left:0px;margin-top:0px;margin-right:0px;margin-bottom:0=
+px;padding:0"><span>=C2=A0</span></p>
+<p style=3D"margin-left:0px;margin-top:0px;margin-right:0px;margin-bottom:0=
+px;padding:0"><span>Luckily, you can now <a href=3D"https://link.join1440.c=
+om/click/37633651.4673008/aHR0cHM6Ly9mYi5uYXRpdmVwYXRoLmNvbS9yZC9yLnBocD9za=
+WQ9MTcyMiZwdWI9MjQwNjk1JmMxPTIwMjQxMTI3LVJFTVNFQ09OREFSWS1lc3QxNzUwMCZjMj0m=
+YzM9/67456a0c2f068d0b710a8397C6df290bb" style=3D"text-decoration:underline!=
+important;color:rgb(0,0,238)!important" target=3D"_blank"><font style=3D"co=
+lor:rgb(0,0,238)"><strong>slow the process with NativePath Collagen Protein=
+</strong></font></a>. In 1 study, 5g of collagen/day caused a 7% increase i=
+n bone density in 1 year! Simply add 2 flavorless NativePath scoops to coff=
+ee or your favorite drink for <a href=3D"https://link.join1440.com/click/37=
+633651.4673008/aHR0cHM6Ly9mYi5uYXRpdmVwYXRoLmNvbS9yZC9yLnBocD9zaWQ9MTcyMiZw=
+dWI9MjQwNjk1JmMxPTIwMjQxMTI3LVJFTVNFQ09OREFSWS1lc3QxNzUwMCZjMj0mYzM9/67456a=
+0c2f068d0b710a8397D6df290bb" style=3D"text-decoration:underline!important;c=
+olor:rgb(0,0,238)!important" target=3D"_blank"><font style=3D"color:rgb(0,0=
+,238)"><strong>18g of protein</strong></font></a>!=C2=A0</span></p>
+<p style=3D"margin-left:0px;margin-top:0px;margin-right:0px;margin-bottom:0=
+px;padding:0"><span>=C2=A0</span></p>
+<p style=3D"padding:0;margin:0"><span><a href=3D"https://link.join1440.com/=
+click/37633651.4673008/aHR0cHM6Ly9mYi5uYXRpdmVwYXRoLmNvbS9yZC9yLnBocD9zaWQ9=
+MTcyMiZwdWI9MjQwNjk1JmMxPTIwMjQxMTI3LVJFTVNFQ09OREFSWS1lc3QxNzUwMCZjMj0mYzM=
+9/67456a0c2f068d0b710a8397E6df290bb" style=3D"text-decoration:underline!imp=
+ortant;color:rgb(0,0,238)!important" target=3D"_blank"><font style=3D"color=
+:rgb(0,0,238)"><strong>1440 Readers: Get free collagen with every purchase =
+during their Black Friday Sale!</strong></font></a></span></p></div>
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td style=3D"padding-right:10px;padding-left:10px">
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" styl=
+e=3D"border-top:10px solid transparent">
+<tbody><tr>
+<td style=3D"font-size:0px;line-height:0">=C2=A0
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+</tbody></table>
+<div></div>
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" bgco=
+lor=3D"#ffffff" style=3D"background-color:rgb(255,255,255)">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-right:20px;padding-left:20px">
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td style=3D"padding-top:10px;padding-bottom:10px">
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" styl=
+e=3D"border-top:2px solid rgb(0,0,0)">
+<tbody><tr>
+<td style=3D"font-size:0px;line-height:0">=C2=A0
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" bgco=
+lor=3D"#ffffff" style=3D"background-color:rgb(255,255,255)">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-right:20px;padding-left:20px"><div></di=
+v>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-top:10px;padding-bottom:5px"><div style=
+=3D"font-family:Georgia,Times,&quot;Times New Roman&quot;,serif;font-size:2=
+3px;color:rgb(0,0,0);font-weight:normal;line-height:32px;letter-spacing:nor=
+mal;text-align:left"><p style=3D"padding:0;margin:0">Business &amp; Markets=
+</p></div>
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-top:10px;padding-bottom:10px"><div styl=
+e=3D"font-family:Roboto,&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-ser=
+if;font-size:15px;color:rgb(0,0,0);font-weight:normal;line-height:22px;lett=
+er-spacing:normal;text-align:left"><p style=3D"padding:0;margin:0"><span><s=
+pan style=3D"font-size:18px"><strong><span style=3D"color:rgb(126,220,242)"=
+>&gt;</span></strong>=C2=A0</span><strong>US stock markets</strong> close=
+=C2=A0higher (S&amp;P 500 +0.6%, Dow +0.3%, Nasdaq +0.6%) following news of=
+ Israel-Hezbollah ceasefire deal=C2=A0(<a href=3D"https://link.join1440.com=
+/click/37633651.4673008/aHR0cHM6Ly9maW5hbmNlLnlhaG9vLmNvbS9uZXdzL2FzaWFuLXN=
+0b2Nrcy1yaXNlLWJvbmRzLXJhbGx5LTIyMzUyNDA0OS5odG1sP3V0bV9zb3VyY2U9am9pbjE0ND=
+AmdXRtX21lZGl1bT1lbWFpbCZ1dG1fcGxhY2VtZW50PW5ld3NsZXR0ZXI/67456a0c2f068d0b7=
+10a8397Bd894fdc5" style=3D"text-decoration:underline!important;color:rgb(0,=
+0,238)!important" target=3D"_blank"><font style=3D"color:rgb(0,0,238)">More=
+</font></a>) | <strong>Learn about the history</strong> of the US stock mar=
+kets (<a href=3D"https://link.join1440.com/click/37633651.4673008/aHR0cHM6L=
+y9kaXNjb3Zlci5qb2luMTQ0MC5jb20vdG9waWNzL3N0b2NrLW1hcmtldD91dG1fc291cmNlPWpv=
+aW4xNDQwJnV0bV9tZWRpdW09ZW1haWwmdXRtX2NhbXBhaWduPXNpZ251cC10b3BpY3MtYnVzaW5=
+lc3MtYW5kLWZpbmFuY2U/67456a0c2f068d0b710a8397Bc031760a" style=3D"text-decor=
+ation:underline!important;color:rgb(0,0,238)!important" target=3D"_blank"><=
+font style=3D"color:rgb(0,0,238)">More</font></a>)</span></p></div>
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-top:10px;padding-bottom:10px"><div styl=
+e=3D"font-family:Roboto,&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-ser=
+if;font-size:15px;color:rgb(0,0,0);font-weight:normal;line-height:22px;lett=
+er-spacing:normal;text-align:left"><p style=3D"padding:0;margin:0"><span><s=
+pan style=3D"font-size:18px"><strong><span style=3D"color:rgb(126,220,242)"=
+>&gt;</span></strong>=C2=A0</span><strong>Walmart rolls back </strong>diver=
+sity programs; changes include closing $100M equity racial center launched =
+in 2020, phasing out the term &quot;DEI,&quot; ending preference for suppli=
+ers majority owned by women, LGBTQ+ members, veterans, and others; ends sal=
+e of some transgender-linked products on Walmart.com (<a href=3D"https://li=
+nk.join1440.com/click/37633651.4673008/aHR0cHM6Ly93d3cuY2JzbmV3cy5jb20vbmV3=
+cy93YWxtYXJ0LWRlaS1wb2xpY2llcy1yb2xsYmFjay1jZW8tam9obi1mdXJuZXItdHJ1bXAtdGF=
+yaWZmcy8_dXRtX3NvdXJjZT1qb2luMTQ0MCZ1dG1fbWVkaXVtPWVtYWlsJnV0bV9wbGFjZW1lbn=
+Q9bmV3c2xldHRlcg/67456a0c2f068d0b710a8397Bc176198a" style=3D"text-decoratio=
+n:underline!important;color:rgb(0,0,238)!important" target=3D"_blank"><font=
+ style=3D"color:rgb(0,0,238)">More</font></a>)</span></p></div>
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-top:10px;padding-bottom:10px"><div styl=
+e=3D"font-family:Roboto,&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-ser=
+if;font-size:15px;color:rgb(0,0,0);font-weight:normal;line-height:22px;lett=
+er-spacing:normal;text-align:left"><p style=3D"padding:0;margin:0"><span><s=
+pan style=3D"font-size:18px"><strong><span style=3D"color:rgb(126,220,242)"=
+>&gt;</span></strong>=C2=A0</span><strong>Federal Reserve minutes=C2=A0</st=
+rong>from meeting earlier this month suggest slower pace of interest rate c=
+uts than previously indicated; next meeting is Dec. 17-18 (<a href=3D"https=
+://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly90aGVoaWxsLmNvbS9ob21=
+lbmV3cy9hcC9hcC1idXNpbmVzcy9hcC1mZWRlcmFsLXJlc2VydmUtb2ZmaWNpYWxzLXNpZ25hbC=
+1jYXV0aW91cy1wYXRoLWZvci1yYXRlLWN1dHMtYW1pZC1zdGlsbC1oaWdoLWluZmxhdGlvbi9tb=
+Gl0ZS8_dXRtX3NvdXJjZT1qb2luMTQ0MCZ1dG1fbWVkaXVtPWVtYWlsJnV0bV9wbGFjZW1lbnQ9=
+bmV3c2xldHRlcg/67456a0c2f068d0b710a8397B5bbaf0a2" style=3D"text-decoration:=
+underline!important;color:rgb(0,0,238)!important" target=3D"_blank"><font s=
+tyle=3D"color:rgb(0,0,238)">More</font></a>) | <strong>Heard about the Fed,=
+</strong> but don&#39;t know how it works? Sign up for 1440 Business &amp; =
+Finance, where we cover this topic and many more (<a href=3D"https://link.j=
+oin1440.com/click/37633651.4673008/aHR0cHM6Ly9kaXNjb3Zlci5qb2luMTQ0MC5jb20v=
+dG9waWNzL2J1c2luZXNzLWFuZC1maW5hbmNlP3V0bV9zb3VyY2U9am9pbjE0NDAmdXRtX21lZGl=
+1bT1lbWFpbCZ1dG1fY2FtcGFpZ249c2lnbnVwLXRvcGljcy1idXNpbmVzcy1hbmQtZmluYW5jZQ=
+/67456a0c2f068d0b710a8397B33d97acb" style=3D"text-decoration:underline!impo=
+rtant;color:rgb(0,0,238)!important" target=3D"_blank"><font style=3D"color:=
+rgb(0,0,238)">Join here</font></a>)</span></p></div>
+</td>
+</tr>
+</tbody></table>
+<div></div>
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" bgco=
+lor=3D"#ffffff" style=3D"background-color:rgb(255,255,255)">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-right:20px;padding-left:20px">
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td style=3D"padding-top:10px;padding-bottom:10px">
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" styl=
+e=3D"border-top:2px solid rgb(0,0,0)">
+<tbody><tr>
+<td style=3D"font-size:0px;line-height:0">=C2=A0
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" bgco=
+lor=3D"#ffffff" style=3D"background-color:rgb(255,255,255)">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-right:20px;padding-left:20px"><div></di=
+v>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-top:10px;padding-bottom:5px"><div style=
+=3D"font-family:Georgia,Times,&quot;Times New Roman&quot;,serif;font-size:2=
+3px;color:rgb(0,0,0);font-weight:normal;line-height:32px;letter-spacing:nor=
+mal;text-align:left"><p style=3D"padding:0;margin:0">Politics &amp; World A=
+ffairs</p></div>
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-top:10px;padding-bottom:10px"><div styl=
+e=3D"font-family:Roboto,&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-ser=
+if;font-size:15px;color:rgb(0,0,0);font-weight:normal;line-height:22px;lett=
+er-spacing:normal;text-align:left"><p style=3D"padding:0;margin:0"><span><s=
+pan style=3D"font-size:18px"><strong><span style=3D"color:rgb(126,220,242)"=
+>&gt;</span></strong>=C2=A0</span><strong>Israel and Hezbollah</strong>=C2=
+=A0agree to US- and France-led ceasefire, ending 14 months of rocket, missi=
+le exchanges; Israeli soldiers to withdraw, Lebanese army to repopulate cou=
+ntry&#39;s south in the coming 60 days (<a href=3D"https://link.join1440.co=
+m/click/37633651.4673008/aHR0cHM6Ly9hYmNuZXdzLmdvLmNvbS9JbnRlcm5hdGlvbmFsL2=
+lzcmFlbC1oZXpib2xsYWgtcmVhY2gtY2Vhc2UtZmlyZS1hZ3JlZW1lbnQvc3Rvcnk_aWQ9MTE2M=
+Tg2MzMzP3V0bV9zb3VyY2U9am9pbjE0NDAmdXRtX21lZGl1bT1lbWFpbCZ1dG1fcGxhY2VtZW50=
+PW5ld3NsZXR0ZXI/67456a0c2f068d0b710a8397Becc42eef" style=3D"text-decoration=
+:underline!important;color:rgb(0,0,238)!important" target=3D"_blank"><font =
+style=3D"color:rgb(0,0,238)">More</font></a>) |=C2=A0<strong>See previous w=
+rite-up=C2=A0</strong>(<a href=3D"https://link.join1440.com/click/37633651.=
+4673008/aHR0cHM6Ly9qb2luMTQ0MC5jb20vbmV3c2xldHRlci90cnVtcC1jaGFyZ2VzLWRpc21=
+pc3NlZC1pc3JhZWwtaGV6Ym9sbGFoLWNlYXNlZmlyZS1hbmQtcGFyZG9uZWQtdHVya2V5cw/674=
+56a0c2f068d0b710a8397Bcdb1f449" style=3D"text-decoration:underline!importan=
+t;color:rgb(0,0,238)!important" target=3D"_blank"><font style=3D"color:rgb(=
+0,0,238)">More</font></a>)</span></p></div>
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-top:10px;padding-bottom:10px"><div styl=
+e=3D"font-family:Roboto,&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-ser=
+if;font-size:15px;color:rgb(0,0,0);font-weight:normal;line-height:22px;lett=
+er-spacing:normal;text-align:left"><p style=3D"padding:0;margin:0"><span><s=
+pan style=3D"font-size:18px"><strong><span style=3D"color:rgb(126,220,242)"=
+>&gt;</span></strong>=C2=A0</span><strong>President-elect Donald Trump</str=
+ong>=C2=A0signs memorandum of understanding with the Biden White House, cle=
+aring the stage for the next phase of the presidential transition (<a href=
+=3D"https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly90aGVoaWxsLm=
+NvbS9ob21lbmV3cy81MDEwOTY2LXRydW1wLW1vdS1iaWRlbi13aGl0ZS1ob3VzZS8_dXRtX3Nvd=
+XJjZT1qb2luMTQ0MCZ1dG1fbWVkaXVtPWVtYWlsJnV0bV9wbGFjZW1lbnQ9bmV3c2xldHRlcg/6=
+7456a0c2f068d0b710a8397Ba3740877" style=3D"text-decoration:underline!import=
+ant;color:rgb(0,0,238)!important" target=3D"_blank"><font style=3D"color:rg=
+b(0,0,238)">More</font></a>) |=C2=A0<strong>How does a presidential </stron=
+g>transition work? (<a href=3D"https://link.join1440.com/click/37633651.467=
+3008/aHR0cHM6Ly9wcmVzaWRlbnRpYWx0cmFuc2l0aW9uLm9yZy9hYm91dC10aGUtY2VudGVyL2=
+ZhcXMtYWJvdXQtcHJlc2lkZW50aWFsLXRyYW5zaXRpb25zLw/67456a0c2f068d0b710a8397B7=
+3539f23" style=3D"text-decoration:underline!important;color:rgb(0,0,238)!im=
+portant" target=3D"_blank"><font style=3D"color:rgb(0,0,238)">More</font></=
+a>)</span></p></div>
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-top:10px;padding-bottom:10px"><div styl=
+e=3D"font-family:Roboto,&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-ser=
+if;font-size:15px;color:rgb(0,0,0);font-weight:normal;line-height:22px;lett=
+er-spacing:normal;text-align:left"><p style=3D"padding:0;margin:0"><span><s=
+pan style=3D"font-size:18px"><strong><span style=3D"color:rgb(126,220,242)"=
+>&gt;</span></strong></span><strong>=C2=A0Thirty-three survivors rescued</s=
+trong> after Red Sea tourist boat with Egyptian crew sinks; seven people re=
+main unaccounted for (<a href=3D"https://link.join1440.com/click/37633651.4=
+673008/aHR0cHM6Ly93d3cuYmJjLmNvbS9uZXdzL2FydGljbGVzL2Mxa254ZDI0djh4bz91dG1f=
+c291cmNlPWpvaW4xNDQwJnV0bV9tZWRpdW09ZW1haWwmdXRtX3BsYWNlbWVudD1uZXdzbGV0dGV=
+y/67456a0c2f068d0b710a8397B3b51a639" style=3D"text-decoration:underline!imp=
+ortant;color:rgb(0,0,238)!important" target=3D"_blank"><font style=3D"color=
+:rgb(0,0,238)">More</font></a>)</span></p></div>
+</td>
+</tr>
+</tbody></table>
+<div></div>
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-top:8px">
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td valign=3D"top"><div></div>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" bgco=
+lor=3D"#ffffff" style=3D"background-color:rgb(255,255,255)">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-top:5px;padding-right:20px;padding-left=
+:20px"><div style=3D"font-family:Roboto,&quot;Helvetica Neue&quot;,Helvetic=
+a,Arial,sans-serif;font-size:15px;color:rgb(0,0,0);font-weight:normal;line-=
+height:22px;letter-spacing:normal;text-align:left"><p style=3D"padding:0;ma=
+rgin:0"><span><span style=3D"font-size:10px"><strong><em>In partnership wit=
+h ButcherBox</em></strong></span></span></p></div>
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" bgco=
+lor=3D"#ffffff" style=3D"background-color:rgb(255,255,255)">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-top:10px;padding-right:20px;padding-bot=
+tom:3px;padding-left:20px"><div style=3D"font-family:Georgia,Times,&quot;Ti=
+mes New Roman&quot;,serif;font-size:23px;color:rgb(0,0,0);font-weight:norma=
+l;line-height:32px;letter-spacing:normal;text-align:left"><p style=3D"paddi=
+ng:0;margin:0">Ribeye, Filet Mignon, and NY Strip=E2=80=94Oh My</p></div>
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" bgco=
+lor=3D"#ffffff" style=3D"background-color:rgb(255,255,255)">
+<tbody><tr>
+<td style=3D"padding-top:5px;padding-right:20px;padding-bottom:10px;padding=
+-left:20px">
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" styl=
+e=3D"border-top:2px solid rgb(0,0,0)">
+<tbody><tr>
+<td style=3D"font-size:0px;line-height:0">=C2=A0
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" bgco=
+lor=3D"#ffffff" style=3D"background-color:rgb(255,255,255)">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-top:10px;padding-right:20px;padding-bot=
+tom:10px;padding-left:20px"><div style=3D"font-family:Roboto,&quot;Helvetic=
+a Neue&quot;,Helvetica,Arial,sans-serif;font-size:15px;color:rgb(0,0,0);fon=
+t-weight:normal;line-height:22px;letter-spacing:normal;text-align:left"><p =
+style=3D"margin-left:0px;margin-top:0px;margin-right:0px;margin-bottom:0px;=
+padding:0"><span>If you&#39;re drooling as much as we are thinking about ar=
+guably one of the best cuts of steak,=C2=A0<em>read closely</em>.=C2=A0Butc=
+herBox, the service that curates high-quality meats and <a href=3D"https://=
+link.join1440.com/click/37633651.4673008/aHR0cHM6Ly9idXRjaGVyYm94LnB4Zi5pby=
+9jLzEyNjAwMTkvMjE3MzAyMi8xNjQxOQ/67456a0c2f068d0b710a8397Ib61ef777" style=
+=3D"text-decoration:underline!important;color:rgb(0,0,238)!important" targe=
+t=3D"_blank"><font style=3D"color:rgb(0,0,238)"><strong>delivers them strai=
+ght to your door</strong></font></a>, is running one of their best deals of=
+ the year.</span></p>
+<p style=3D"margin-left:0px;margin-top:0px;margin-right:0px;margin-bottom:0=
+px;padding:0"><span>=C2=A0</span></p>
+<p style=3D"padding:0;margin:0"><span>Along with their other <a href=3D"htt=
+ps://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly9idXRjaGVyYm94LnB4Z=
+i5pby9jLzEyNjAwMTkvMjE3MzAyMi8xNjQxOQ/67456a0c2f068d0b710a8397Jb61ef777" st=
+yle=3D"text-decoration:underline!important;color:rgb(0,0,238)!important" ta=
+rget=3D"_blank"><font style=3D"color:rgb(0,0,238)"><strong>preservative- an=
+d antibiotic-free meats in every box</strong></font></a>, new customers who=
+ sign up in the next 48 hours will also get=C2=A0f<em>ree steak in every bo=
+x for a year</em>=C2=A0(a $336+ value!).=C2=A0Choose between ribeye, filet =
+mignon, and NY strip, <a href=3D"https://link.join1440.com/click/37633651.4=
+673008/aHR0cHM6Ly9idXRjaGVyYm94LnB4Zi5pby9jLzEyNjAwMTkvMjE3MzAyMi8xNjQxOQ/6=
+7456a0c2f068d0b710a8397Kb61ef777" style=3D"text-decoration:underline!import=
+ant;color:rgb(0,0,238)!important" target=3D"_blank"><font style=3D"color:rg=
+b(0,0,238)"><strong>PLUS get $100 off ($20 off your first five boxes) with =
+code 1440NOVEMBER.</strong></font></a></span></p></div>
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" bgco=
+lor=3D"#ffffff" style=3D"background-color:rgb(255,255,255)">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-right:20px;padding-bottom:10px;padding-=
+left:20px"><div style=3D"font-family:Roboto,&quot;Helvetica Neue&quot;,Helv=
+etica,Arial,sans-serif;font-size:15px;color:rgb(0,0,0);font-weight:normal;l=
+ine-height:22px;letter-spacing:normal;text-align:center"><p style=3D"paddin=
+g:0;margin:0"><span><span style=3D"font-size:10px"><em>Please support our s=
+ponsors!</em></span></span></p></div>
+</td>
+</tr>
+</tbody></table>
+<div></div>
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-top:10px">
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td valign=3D"top">
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" bgco=
+lor=3D"#ffffff" style=3D"background-color:rgb(255,255,255)">
+<tbody><tr>
+<td valign=3D"top"><div></div>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td valign=3D"top" align=3D"left" style=3D"padding-top:20px;padding-right:2=
+0px;padding-left:20px">
+
+<a style=3D"display:inline-block;text-decoration:none">
+<span>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" bgcolor=3D"#f48cd9"=
+ style=3D"background-color:rgb(244,140,217)">
+<tbody><tr>
+<td align=3D"center" style=3D"padding-top:2px;padding-right:8px;padding-bot=
+tom:2px;padding-left:8px">
+<span style=3D"font-family:Georgia,Times,&quot;Times New Roman&quot;,serif;=
+font-size:23px;line-height:33px;letter-spacing:normal;color:rgb(0,0,0)!impo=
+rtant">
+<font style=3D"color:rgb(0,0,0)">
+<span><span>Etcetera=E2=80=94Best=C2=A0of=C2=A0November 2024</span></span>
+</font>
+</span>
+</td>
+</tr>
+</tbody></table>
+</span>
+</a>
+
+<div style=3D"display:none">
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" bgcolor=3D"#f48cd9"=
+ style=3D"background-color:rgb(244,140,217)">
+<tbody><tr>
+<td align=3D"center" style=3D"padding-top:2px;padding-right:8px;padding-bot=
+tom:2px;padding-left:8px">
+<a style=3D"font-family:Georgia,Times,&quot;Times New Roman&quot;,serif;fon=
+t-size:23px;line-height:33px;letter-spacing:normal;text-decoration:none;tex=
+t-align:center;color:rgb(0,0,0)!important">
+<span style=3D"font-family:Georgia,Times,&quot;Times New Roman&quot;,serif;=
+font-size:23px;line-height:33px;letter-spacing:normal;color:rgb(0,0,0)!impo=
+rtant">
+<font style=3D"color:rgb(0,0,0)">
+<span><span>Etcetera=E2=80=94Best=C2=A0of=C2=A0November 2024</span></span>
+</font>
+</span>
+</a>
+</td>
+</tr>
+</tbody></table>
+</div>
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td style=3D"padding-top:10px;padding-right:20px;padding-bottom:10px;paddin=
+g-left:20px">
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" styl=
+e=3D"border-top:2px solid rgb(0,0,0)">
+<tbody><tr>
+<td style=3D"font-size:0px;line-height:0">=C2=A0
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-top:5px;padding-right:20px;padding-bott=
+om:15px;padding-left:20px"><div style=3D"font-family:Roboto,&quot;Helvetica=
+ Neue&quot;,Helvetica,Arial,sans-serif;font-size:15px;color:rgb(0,0,0);font=
+-weight:normal;line-height:22px;letter-spacing:normal;text-align:left"><p s=
+tyle=3D"margin-left:0px;margin-top:0px;margin-right:0px;margin-bottom:0px;p=
+adding:0"><span><em>Editor&#39;s note: More than 10 million=C2=A0monthly=C2=
+=A0clicks=C2=A0can&#39;t=C2=A0be=C2=A0wrong. Here are the most popular stor=
+ies we ran=C2=A0in=C2=A0November. Enjoy!</em></span></p>
+<p style=3D"margin-left:0px;margin-top:0px;margin-right:0px;margin-bottom:0=
+px;padding:0"><span>=C2=A0</span></p>
+<p style=3D"margin-left:0px;margin-top:0px;margin-right:0px;margin-bottom:0=
+px;padding:0"><span><strong>(11/20/24)</strong> See National Geographic&#39=
+;s Pictures <a href=3D"https://link.join1440.com/click/37633651.4673008/aHR=
+0cHM6Ly93d3cudXNhdG9kYXkuY29tL3N0b3J5L25ld3MvbmF0aW9uLzIwMjQvMTEvMTkvbmF0aW=
+9uYWwtZ2VvZ3JhcGhpYy1waWN0dXJlcy1vZi15ZWFyLTIwMjQvNzY0MDUxNzUwMDcvP3V0bV9zb=
+3VyY2U9am9pbjE0NDAmdXRtX21lZGl1bT1lbWFpbCZ1dG1fcGxhY2VtZW50PW5ld3NsZXR0ZXI/=
+67456a0c2f068d0b710a8397B37167a21" style=3D"text-decoration:underline!impor=
+tant;color:rgb(0,0,238)!important" target=3D"_blank"><font style=3D"color:r=
+gb(0,0,238)">of the Year</font></a>.=C2=A0</span></p>
+<p style=3D"margin-left:0px;margin-top:0px;margin-right:0px;margin-bottom:0=
+px;padding:0"><span>=C2=A0</span></p>
+<p style=3D"margin-left:0px;margin-top:0px;margin-right:0px;margin-bottom:0=
+px;padding:0"><span><strong>(11/13/24)</strong> Why people in old <a href=
+=3D"https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly93d3cudXB3b3=
+J0aHkuY29tL3doeS1kaWRuLXQtcGVvcGxlLXNtaWxlLWluLW9sZC1waG90b2dyYXBocy1pdC13Y=
+XNuLXQtanVzdC1hYm91dC10aGUtbG9uZy1leHBvc3VyZS10aW1lcz91dG1fc291cmNlPWpvaW4x=
+NDQwJnV0bV9tZWRpdW09ZW1haWwmdXRtX3BsYWNlbWVudD1uZXdzbGV0dGVy/67456a0c2f068d=
+0b710a8397B352c92ba" style=3D"text-decoration:underline!important;color:rgb=
+(0,0,238)!important" target=3D"_blank"><font style=3D"color:rgb(0,0,238)">p=
+hotographs didn&#39;t smile</font></a>.=C2=A0</span></p>
+<p style=3D"margin-left:0px;margin-top:0px;margin-right:0px;margin-bottom:0=
+px;padding:0"><span>=C2=A0</span></p>
+<p style=3D"margin-left:0px;margin-top:0px;margin-right:0px;margin-bottom:0=
+px;padding:0"><span><strong>(11/21/24)</strong> Visualizing America&#39;s <=
+a href=3D"https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly91c2Fm=
+YWN0cy5vcmcvYXJ0aWNsZXMvd2hhdC1hcmUtdGhlLWZhc3Rlc3QtZ3Jvd2luZy1wcm9mZXNzaW9=
+ucy1pbi1hbWVyaWNhLz91dG1fc291cmNlPWpvaW4xNDQwJnV0bV9tZWRpdW09ZW1haWwmdXRtX3=
+BsYWNlbWVudD1uZXdzbGV0dGVy/67456a0c2f068d0b710a8397B582ac9d1" style=3D"text=
+-decoration:underline!important;color:rgb(0,0,238)!important" target=3D"_bl=
+ank"><font style=3D"color:rgb(0,0,238)">fastest-growing jobs</font></a>.=C2=
+=A0</span></p>
+<p style=3D"margin-left:0px;margin-top:0px;margin-right:0px;margin-bottom:0=
+px;padding:0"><span>=C2=A0</span></p>
+<p style=3D"margin-left:0px;margin-top:0px;margin-right:0px;margin-bottom:0=
+px;padding:0"><span><strong>(11/22/24)</strong> World&#39;s tallest and sho=
+rtest women <a href=3D"https://link.join1440.com/click/37633651.4673008/aHR=
+0cHM6Ly93d3cuZXVyb25ld3MuY29tL2N1bHR1cmUvMjAyNC8xMS8yMS90aGUtd29ybGRzLXRhbG=
+xlc3QtYW5kLXNob3J0ZXN0LXdvbWVuLW1lZXQtaW4tbG9uZG9uLWZvci1yZWNvcmQtYnJlYWtpb=
+mctdGVhP3V0bV9zb3VyY2U9am9pbjE0NDAmdXRtX21lZGl1bT1lbWFpbCZ1dG1fcGxhY2VtZW50=
+PW5ld3NsZXR0ZXI/67456a0c2f068d0b710a8397B2fa12fd7" style=3D"text-decoration=
+:underline!important;color:rgb(0,0,238)!important" target=3D"_blank"><font =
+style=3D"color:rgb(0,0,238)">meet for tea</font></a>. (w/photo)</span></p>
+<p style=3D"margin-left:0px;margin-top:0px;margin-right:0px;margin-bottom:0=
+px;padding:0"><span>=C2=A0</span></p>
+<p style=3D"margin-left:0px;margin-top:0px;margin-right:0px;margin-bottom:0=
+px;padding:0"><span><strong>(11/2/24)</strong> Texas man saves two lives in=
+ six weeks after 20 <a href=3D"https://link.join1440.com/click/37633651.467=
+3008/aHR0cHM6Ly93d3cubmJjZGZ3LmNvbS9uZXdzL2xvY2FsL25vcnRoLXRleGFzLWhlcm8tc2=
+F2ZXMtdHdvLWxpdmVzLWFmdGVyLXNwZW5kaW5nLTIwLXllYXJzLWluLXByaXNvbi8zNjgzODA3L=
+w/67456a0c2f068d0b710a8397Bee677d9f" style=3D"text-decoration:underline!imp=
+ortant;color:rgb(0,0,238)!important" target=3D"_blank"><font style=3D"color=
+:rgb(0,0,238)">years in prison</font></a>.=C2=A0</span></p>
+<p style=3D"margin-left:0px;margin-top:0px;margin-right:0px;margin-bottom:0=
+px;padding:0"><span>=C2=A0</span></p>
+<p style=3D"margin-left:0px;margin-top:0px;margin-right:0px;margin-bottom:0=
+px;padding:0"><span><strong>(11/4/24)</strong>=C2=A0Why do dogs <a href=3D"=
+https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly93d3cudGhlLXNjaW=
+VudGlzdC5jb20vd2h5LWRvLWRvZ3Mtd2FnLXRoZWlyLXRhaWxzLTcyMjIwP3V0bV9zb3VyY2U9a=
+m9pbjE0NDAmdXRtX21lZGl1bT1lbWFpbCZ1dG1fcGxhY2VtZW50PW5ld3NsZXR0ZXI/67456a0c=
+2f068d0b710a8397B64084e88" style=3D"text-decoration:underline!important;col=
+or:rgb(0,0,238)!important" target=3D"_blank"><font style=3D"color:rgb(0,0,2=
+38)">wag their tails</font></a>?=C2=A0</span></p>
+<p style=3D"margin-left:0px;margin-top:0px;margin-right:0px;margin-bottom:0=
+px;padding:0"><span>=C2=A0</span></p>
+<p style=3D"margin-left:0px;margin-top:0px;margin-right:0px;margin-bottom:0=
+px;padding:0"><span><strong>(11/5/24)</strong> Ranking America&#39;s <a hre=
+f=3D"https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly93YWxsZXRod=
+WIuY29tL2VkdS9lL2Jlc3Qtd29yc3QtY29sbGVnZS1jaXRpZXMtYW5kLXRvd25zLWluLWFtZXJp=
+Y2EvODk3ND91dG1fc291cmNlPWpvaW4xNDQwJnV0bV9tZWRpdW09ZW1haWwmdXRtX3BsYWNlbWV=
+udD1uZXdzbGV0dGVy/67456a0c2f068d0b710a8397B84b01e95" style=3D"text-decorati=
+on:underline!important;color:rgb(0,0,238)!important" target=3D"_blank"><fon=
+t style=3D"color:rgb(0,0,238)">best college towns</font></a>.=C2=A0</span><=
+/p>
+<p style=3D"margin-left:0px;margin-top:0px;margin-right:0px;margin-bottom:0=
+px;padding:0"><span>=C2=A0</span></p>
+<p style=3D"margin-left:0px;margin-top:0px;margin-right:0px;margin-bottom:0=
+px;padding:0"><span><strong>(11/22/24)</strong> A list of 25 important reci=
+pes from the <a href=3D"https://link.join1440.com/click/37633651.4673008/aH=
+R0cHM6Ly9zbGF0ZS5jb20vbGlmZS8yMDI0LzExL2Zvb2QtY29va2luZy1yZWNpcGVzLXRoYW5rc=
+2dpdmluZy0yMDI0Lmh0bWw_dXRtX3NvdXJjZT1qb2luMTQ0MCZ1dG1fbWVkaXVtPWVtYWlsJnV0=
+bV9wbGFjZW1lbnQ9bmV3c2xldHRlcg/67456a0c2f068d0b710a8397B1d63bc35" style=3D"=
+text-decoration:underline!important;color:rgb(0,0,238)!important" target=3D=
+"_blank"><font style=3D"color:rgb(0,0,238)">past 100 years</font></a>.=C2=
+=A0</span></p>
+<p style=3D"margin-left:0px;margin-top:0px;margin-right:0px;margin-bottom:0=
+px;padding:0"><span>=C2=A0</span></p>
+<p style=3D"margin-left:0px;margin-top:0px;margin-right:0px;margin-bottom:0=
+px;padding:0"><span><strong>(11/14/24)</strong> Doctors put a time limit <a=
+ href=3D"https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly93d3cuY=
+25uLmNvbS8yMDI0LzExLzEyL2hlYWx0aC9waG9uZXMtb24tdG9pbGV0LXdlbGxuZXNzL2luZGV4=
+Lmh0bWw_dXRtX3NvdXJjZT1qb2luMTQ0MCZ1dG1fbWVkaXVtPWVtYWlsJnV0bV9wbGFjZW1lbnQ=
+9bmV3c2xldHRlcg/67456a0c2f068d0b710a8397B9a7bd66c" style=3D"text-decoration=
+:underline!important;color:rgb(0,0,238)!important" target=3D"_blank"><font =
+style=3D"color:rgb(0,0,238)">on the toilet</font></a>.=C2=A0=C2=A0</span></=
+p>
+<p style=3D"margin-left:0px;margin-top:0px;margin-right:0px;margin-bottom:0=
+px;padding:0"><span>=C2=A0</span></p>
+<p style=3D"margin-left:0px;margin-top:0px;margin-right:0px;margin-bottom:0=
+px;padding:0"><span><strong>(11/6/24)</strong> Weather Photography of the Y=
+ear award goes to <a href=3D"https://link.join1440.com/click/37633651.46730=
+08/aHR0cHM6Ly93d3cuaWZsc2NpZW5jZS5jb20vb3RoZXJ3b3JsZGx5LXJlZC1zcHJpdGVzLXdp=
+bi10b3Atc3BvdC1hdC13ZWF0aGVyLXBob3RvZ3JhcGhlci1vZi10aGUteWVhci0yMDI0LTc2NjQ=
+2P3V0bV9zb3VyY2U9am9pbjE0NDAmdXRtX21lZGl1bT1lbWFpbCZ1dG1fcGxhY2VtZW50PW5ld3=
+NsZXR0ZXI/67456a0c2f068d0b710a8397Bb609555f" style=3D"text-decoration:under=
+line!important;color:rgb(0,0,238)!important" target=3D"_blank"><font style=
+=3D"color:rgb(0,0,238)">&quot;red sprites&quot; image</font></a>.=C2=A0</sp=
+an></p>
+<p style=3D"margin-left:0px;margin-top:0px;margin-right:0px;margin-bottom:0=
+px;padding:0"><span>=C2=A0</span></p>
+<p style=3D"margin-left:0px;margin-top:0px;margin-right:0px;margin-bottom:0=
+px;padding:0"><span><strong>Clickbait:</strong>=C2=A0Woman finds a python <=
+a href=3D"https://link.join1440.com/click/37633651.4673008/aHR0cHM6Ly93d3cu=
+dXBpLmNvbS9PZGRfTmV3cy8yMDI0LzExLzA2L2JhbGwtcHl0aG9uLUNvbHVtYmlhLVNvdXRoLUN=
+hcm9saW5hLXNuYWtlLzY3ODE3MzA5Mjc1OTQvP3V0bV9zb3VyY2U9am9pbjE0NDAmdXRtX21lZG=
+l1bT1lbWFpbCZ1dG1fcGxhY2VtZW50PW5ld3NsZXR0ZXI/67456a0c2f068d0b710a8397Bdcaf=
+ecc0" style=3D"text-decoration:underline!important;color:rgb(0,0,238)!impor=
+tant" target=3D"_blank"><font style=3D"color:rgb(0,0,238)">behind her toile=
+t</font></a>. (w/photo)</span></p>
+<p style=3D"margin-left:0px;margin-top:0px;margin-right:0px;margin-bottom:0=
+px;padding:0"><span>=C2=A0</span></p>
+<p style=3D"padding:0;margin:0"><span><strong>Historybook:</strong>=C2=A0Th=
+e Nobel Prize is established (1895); Bruce Lee born (1940); Jimi Hendrix bo=
+rn (1942); Mars 2, a Soviet space probe, is first human-made object to reac=
+h Mars (1971); LGBTQ+ rights activist=C2=A0<a href=3D"https://link.join1440=
+.com/click/37633651.4673008/aHR0cHM6Ly9lbi53aWtpcGVkaWEub3JnL3dpa2kvSGFydmV=
+5X01pbGs/67456a0c2f068d0b710a8397B39f5ccb7" style=3D"text-decoration:underl=
+ine!important;color:rgb(0,0,238)!important" target=3D"_blank"><font style=
+=3D"color:rgb(0,0,238)">Harvey Milk</font></a>=C2=A0is assassinated (1978).=
+=C2=A0</span></p></div>
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" bgco=
+lor=3D"#000000" style=3D"background-color:rgb(0,0,0)">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-top:30px;padding-bottom:30px">
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-right:30px;padding-bottom:10px;padding-=
+left:30px"><div style=3D"font-family:Georgia,Times,&quot;Times New Roman&qu=
+ot;,serif;font-size:23px;color:rgb(255,255,255);font-weight:normal;line-hei=
+ght:32px;letter-spacing:normal;text-align:center"><p style=3D"padding:0;mar=
+gin:0">&quot;It takes no money to respect the individual.&quot;</p></div>
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-top:5px;padding-right:10px;padding-bott=
+om:5px;padding-left:10px"><div style=3D"font-family:Roboto,&quot;Helvetica =
+Neue&quot;,Helvetica,Arial,sans-serif;font-size:14px;color:rgb(255,255,255)=
+;font-weight:normal;line-height:20px;letter-spacing:normal;text-align:cente=
+r"><p style=3D"padding:0;margin:0"><span>- Harvey Milk</span></p></div>
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+</tbody></table>
+<div></div><div></div>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" bgco=
+lor=3D"#ffffff" style=3D"background-color:rgb(255,255,255)">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-top:30px;padding-right:20px;padding-bot=
+tom:20px;padding-left:20px"><div style=3D"font-family:Roboto,&quot;Helvetic=
+a Neue&quot;,Helvetica,Arial,sans-serif;font-size:12px;color:rgb(0,0,0);fon=
+t-weight:normal;line-height:18px;letter-spacing:normal;text-align:left"><p =
+style=3D"margin-left:0px;margin-top:0px;margin-right:0px;margin-bottom:0px;=
+padding:0"><span><span style=3D"font-size:12px"><strong>Why 1440? </strong>=
+The printing press was invented around the year 1440, spreading knowledge t=
+o the masses and changing the course of history. More facts: In every day, =
+there are=C2=A01,440 minutes. We=E2=80=99re here to make each one count.</s=
+pan></span></p>
+<p style=3D"margin-left:0px;margin-top:0px;margin-right:0px;margin-bottom:0=
+px;padding:0"><span>=C2=A0</span></p>
+<p style=3D"margin-left:0px;margin-top:0px;margin-right:0px;margin-bottom:0=
+px;padding:0"><span><span style=3D"font-size:12px"><strong>Send us your fee=
+dback at</strong> <a href=3D"mailto:hello@join1440.com" style=3D"text-decor=
+ation:underline!important;color:rgb(0,0,238)!important" target=3D"_blank"><=
+font style=3D"color:rgb(0,0,238)">hello@join1440.com</font></a> and help us=
+ stay as unbiased as humanly possible. We=E2=80=99re ready to listen.</span=
+></span></p>
+<p style=3D"margin-left:0px;margin-top:0px;margin-right:0px;margin-bottom:0=
+px;padding:0"><span>=C2=A0</span></p>
+<p style=3D"padding:0;margin:0"><span><span style=3D"font-size:12px"><stron=
+g>Interested in reaching intellectually curious readers like you?</strong> =
+To become a 1440 partner, <a href=3D"https://link.join1440.com/click/376336=
+51.4673008/aHR0cHM6Ly9qb2luMTQ0MC5jb20vcGFydG5lcg/67456a0c2f068d0b710a8397B=
+7949f1a2" style=3D"text-decoration:underline!important;color:rgb(0,0,238)!i=
+mportant" target=3D"_blank"><font style=3D"color:rgb(0,0,238)">apply here</=
+font></a>.</span></span></p></div>
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" bgco=
+lor=3D"#ffffff" style=3D"background-color:rgb(255,255,255)">
+<tbody><tr>
+<td valign=3D"top"><div></div>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" bgco=
+lor=3D"#ffffff" style=3D"background-color:rgb(255,255,255)">
+<tbody><tr>
+<td valign=3D"top" style=3D"padding-top:20px;padding-right:30px;padding-bot=
+tom:20px;padding-left:30px"><div style=3D"font-family:Roboto,&quot;Helvetic=
+a Neue&quot;,Helvetica,Arial,sans-serif;font-size:12px;color:rgb(0,0,0);fon=
+t-weight:normal;line-height:18px;letter-spacing:normal;text-align:center"><=
+p style=3D"margin-left:0px;margin-top:0px;margin-right:0px;margin-bottom:0p=
+x;padding:0"><span>1440 Media 222 W Merchandise Mart Plaza,=C2=A0Suite 1212=
+ Chicago, IL 60654</span></p>
+<p style=3D"padding:0;margin:0"><span>Copyright =C2=A9 2024, 1440 Media, Al=
+l rights reserved.</span></p></div>
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td valign=3D"top" align=3D"center">
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" bgcolor=3D"transpar=
+ent" style=3D"background-color:transparent;max-width:100%">
+<tbody><tr>
+<td valign=3D"top" align=3D"center" style=3D"padding-bottom:20px"><img src=
+=3D"https://images.chamaileon.io/603e31c9224efc2a1990854e/603e31c9224efc4ac=
+a908558/1707233097279_1440Brandmark.png" width=3D"65" height=3D"30" alt=3D"=
+" border=3D"0" style=3D"display:block;font-size:14px;max-width:100%;height:=
+auto">
+</td>
+</tr>
+</tbody></table>
+
+</td>
+</tr>
+</tbody></table>
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" bgco=
+lor=3D"#f4f4f4" style=3D"background-color:rgb(244,244,244)">
+<tbody><tr>
+<td style=3D"padding:5px">
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td style=3D"font-size:0px;line-height:0">=C2=A0
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+</tbody></table>
+ <div id=3D"m_1350019980713633880_two50"></div> <img id=3D"m_13500199807136=
+33880_two50_img" src=3D"https://join1440.everestengagement.com/ea/czipVtFs9=
+8/?e=3D[email,+fallback=3D]&amp;c=3D%3C$Enc.CampaignID$%3E" width=3D"1" hei=
+ght=3D"1" style=3D"margin: 0px !important; padding: 0px !important; border:=
+ 0px !important; height: 1px !important; width: 1px !important; --darkreade=
+r-inline-border-top: 0px; --darkreader-inline-border-right: 0px; --darkread=
+er-inline-border-bottom: 0px; --darkreader-inline-border-left: 0px;"><table=
+ bgcolor=3D"#f4f4f4" style=3D"background-color:rgb(244,244,244)" cellpaddin=
+g=3D"10px" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td align=3D"center" width=3D"100%">
+
+<table class=3D"m_1350019980713633880width600 m_1350019980713633880main-con=
+tainer" cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%" sty=
+le=3D"max-width:600px">
+<tbody><tr>
+<td width=3D"100%">
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>=20
+<td valign=3D"top">
+<table cellpadding=3D"0" cellspacing=3D"0" border=3D"0" width=3D"100%">
+<tbody><tr>
+<td valign=3D"top">
+<table align=3D"left" cellpadding=3D"0" cellspacing=3D"0" border=3D"0">
+<tbody><tr>
+<td valign=3D"top"><div style=3D"font-family:Roboto,&quot;Helvetica Neue&qu=
+ot;,Helvetica,Arial,sans-serif;font-size:12px;color:rgb(153,153,153);line-h=
+eight:18px;text-align:left"><p style=3D"padding:0;margin:0;text-align:cente=
+r"><span><u><a href=3D"https://link.join1440.com/oc/67456a0c2f068d0b710a839=
+7memb7.2s5ps/6fafafdc" target=3D"_blank">Unsubscribe</a></u> from this emai=
+l or <u><a href=3D"https://link.join1440.com/click/37633651.4673008/aHR0cHM=
+6Ly9qb2luMTQ0MC5jb20vcHJlZmVyZW5jZXM/67456a0c2f068d0b710a8397B670be76b" tar=
+get=3D"_blank">update my subscription preferences</a></u>.</span></p></div>
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+</tbody></table>
+
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+</tbody></table>
+
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+</tbody></table>
+</div>
+</div>
+</div></div></div>
+
+--000000000000da7b7b062818f60e--

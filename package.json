@@ -1,0 +1,22 @@
+{
+  "name": "news",
+  "version": "0.0.1",
+  "description": "A collection of functions for aggregating news.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pastorius/news.git"
+  },
+  "author": "Evan Smith",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pastorius/news/issues"
+  },
+  "homepage": "https://github.com/pastorius/news#readme",
+  "devDependencies": {
+    "npm": "^10.9.1"
+  }
+}
