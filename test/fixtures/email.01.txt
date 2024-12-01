@@ -1,21 +1,21 @@
-Return-Path: <pastorius@gmail.com>
+Return-Path: <foo@foo.com>
 Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
  by inbound-smtp.us-east-2.amazonaws.com with SMTP id uqju4dldrje54eerta33a8nv17k4fcr7p1tedm01
- for inbound@news.smitchee.com;
+ for inbound@news.foo.com;
  Sat, 30 Nov 2024 03:31:38 +0000 (UTC)
 X-SES-Spam-Verdict: PASS
 X-SES-Virus-Verdict: PASS
-Received-SPF: pass (spfCheck: domain of _spf.google.com designates 209.85.216.43 as permitted sender) client-ip=209.85.216.43; envelope-from=pastorius@gmail.com; helo=mail-pj1-f43.google.com;
+Received-SPF: pass (spfCheck: domain of _spf.google.com designates 209.85.216.43 as permitted sender) client-ip=209.85.216.43; envelope-from=foo@foo.com; helo=mail-pj1-f43.google.com;
 Authentication-Results: amazonses.com;
- spf=pass (spfCheck: domain of _spf.google.com designates 209.85.216.43 as permitted sender) client-ip=209.85.216.43; envelope-from=pastorius@gmail.com; helo=mail-pj1-f43.google.com;
+ spf=pass (spfCheck: domain of _spf.google.com designates 209.85.216.43 as permitted sender) client-ip=209.85.216.43; envelope-from=foo@foo.com; helo=mail-pj1-f43.google.com;
  dkim=pass header.i=@gmail.com;
  dmarc=pass header.from=gmail.com;
 X-SES-RECEIPT: AEFBQUFBQUFBQUFHeEptY2xRSnRNbXFWRXBRcjFzamhXNHVnWDJVdU9QZnZYakJUWlJaUzNqZTVjdzgvRndDQzdTK1dscmlnNklVdzNNTXgyaDFaeFJ2Zm1EVUJiYzg5Rmx5ZFExR0R4eDMrbjM2RFRTaWR3NFFNVkdmRE9Ycjlkb1N0eDl1OXVpbHhIWjZTYnNJN2lGcmVKZHMvL2dPOHdGM0Mrdkl4VGJoR2FvdUEwbEZHZ3Fka0dkbDV6a2s4RnYrbk5BUldaay9sNitUUHU5QjNrRnp1NDJrV2RHMC9WaGNyTGFqek51K2ZsOXY0ZHlnT1pQOGNJSjBMd2ptbGFFVjBaWEQwdndNZ2NxTHhncCtETDJDN3RjK0d5WVlSSjdYOURIT2pXQlFkSGRHVWxsRFQ4amc9PQ==
 X-SES-DKIM-SIGNATURE: a=rsa-sha256; q=dns/txt; b=6WwpzMk5ekTrqPFJi6xHMqASXcYYOsChg40Ng8Yy3HURLxlOxydRoDejTYH6MR8lA3lOdQxf46r5tyA0y6Wxp6hFYmG4b2TmyGFXKQdjKdDmKGIptT5NnEAHqDybj2+i3eoNL0dlG5cQHBcF/9MxUH22FHCVpLR698vaxgLXdcA=; c=relaxed/simple; s=xplzuhjr4seloozmmorg6obznvt7ijlt; d=amazonses.com; t=1732937499; v=1; bh=DlJl8k8WQHTzyKPUFnthNnCgEpN7ieDlwFzwwsLF1/w=; h=From:To:Cc:Bcc:Subject:Date:Message-ID:MIME-Version:Content-Type:X-SES-RECEIPT;
 Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-2ee786b3277so255038a91.1
-        for <inbound@news.smitchee.com>; Fri, 29 Nov 2024 19:31:38 -0800 (PST)
+        for <inbound@news.foo.com>; Fri, 29 Nov 2024 19:31:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1732937497; x=1733542297; darn=news.smitchee.com;
+        d=gmail.com; s=20230601; t=1732937497; x=1733542297; darn=news.foo.com;
         h=to:subject:message-id:date:from:in-reply-to:references:mime-version
          :from:to:cc:subject:date:message-id:reply-to;
         bh=DlJl8k8WQHTzyKPUFnthNnCgEpN7ieDlwFzwwsLF1/w=;
@@ -48,12 +48,12 @@ X-Received: by 2002:a17:90b:38ca:b0:2ea:691b:aa32 with SMTP id
 MIME-Version: 1.0
 References: <20241126042658.37615905.4674886@sailthru.com>
 In-Reply-To: <20241126042658.37615905.4674886@sailthru.com>
-From: Evan Smith <pastorius@gmail.com>
+From: Evan Smith <foo@foo.com>
 Date: Fri, 29 Nov 2024 19:31:24 -0800
 Message-ID: <CAHzWgFh+ny9xiEjyvFw+DBwLXy=1xiYS=mhQnUN85XTdFvPhRQ@mail.gmail.com>
 Subject: Fwd: Trump Charges Dismissed, Israel-Hezbollah Ceasefire, and
  Pardoned Turkeys
-To: inbound@news.smitchee.com
+To: inbound@news.foo.com
 Content-Type: multipart/alternative; boundary="000000000000e53af3062818f384"
 
 --000000000000e53af3062818f384

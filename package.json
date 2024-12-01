@@ -4,7 +4,10 @@
   "description": "A collection of functions for aggregating news.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-validate": "mkdir -p build/; cp -R src/validate/* node_modules build/; cd build; rm -rf ./; zip -r validate.zip ./*.js node_modules; cd -",
+    "build-summarize": "mkdir -p build/; cp -R src/summarize/* node_modules build/; cd build; rm -rf ./; zip -r summarize.zip ./*.js node_modules; cd -",
+    "build-email": "mkdir -p build/; cp -R src/email/* node_modules build/; cd build; rm -rf ./; zip -r email.zip ./*.js node_modules; cd -"
   },
   "repository": {
     "type": "git",
@@ -17,6 +20,12 @@
   },
   "homepage": "https://github.com/pastorius/news#readme",
   "devDependencies": {
+    "gulp": "^5.0.0",
+    "gulp-mocha": "^10.0.1",
+    "mocha": "^10.8.2",
     "npm": "^10.9.1"
+  },
+  "dependencies": {
+    "striptags": "^3.2.0"
   }
 }

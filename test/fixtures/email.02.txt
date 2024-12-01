@@ -1,21 +1,21 @@
-Return-Path: <pastorius@gmail.com>
+Return-Path: <foo@foo.com>
 Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
  by inbound-smtp.us-east-2.amazonaws.com with SMTP id ll2i51bel9va127ikm96uqh0rct9aoca3aeg2fo1
- for inbound@news.smitchee.com;
+ for inbound@news.foo.com;
  Sat, 30 Nov 2024 03:32:27 +0000 (UTC)
 X-SES-Spam-Verdict: PASS
 X-SES-Virus-Verdict: PASS
-Received-SPF: pass (spfCheck: domain of _spf.google.com designates 209.85.216.52 as permitted sender) client-ip=209.85.216.52; envelope-from=pastorius@gmail.com; helo=mail-pj1-f52.google.com;
+Received-SPF: pass (spfCheck: domain of _spf.google.com designates 209.85.216.52 as permitted sender) client-ip=209.85.216.52; envelope-from=foo@foo.com; helo=mail-pj1-f52.google.com;
 Authentication-Results: amazonses.com;
- spf=pass (spfCheck: domain of _spf.google.com designates 209.85.216.52 as permitted sender) client-ip=209.85.216.52; envelope-from=pastorius@gmail.com; helo=mail-pj1-f52.google.com;
+ spf=pass (spfCheck: domain of _spf.google.com designates 209.85.216.52 as permitted sender) client-ip=209.85.216.52; envelope-from=foo@foo.com; helo=mail-pj1-f52.google.com;
  dkim=pass header.i=@gmail.com;
  dmarc=pass header.from=gmail.com;
 X-SES-RECEIPT: AEFBQUFBQUFBQUFIeUJrcHhWM2FVZSsycmxNMVVzazNxdEh6YmpsbExud3JsVDZQSXlYczMvZTVkS0pGakRncVM0ZkJPbDdzbnRiSnZZL1pBZ0hUelp6STVvWkpXUGRmRTR6K1NWYzVWZ2I2ZlQwR1RxZ3NHN1RFUWd3SlVlVEpab3lqdTBPYjBZVklsdU1wTW5EZm1iS2t1ZjFuQWFpTWQzb21JZUp4R240ZXh4N0xYNmlkaElRM1dZU29iUHl2UDZEYWwzMTR1bWx3a0Fzb1UwaVpSWnAvR2xTL1Nqc0V3RlcrV2JIbDZqeG5Ka2FYM3ZoMU1oRFhGYWcvZ2JkSWVkb1hkSHdOQ2VqU2RoYW1rc1BYQjdpNWZWTnFGNHRBTVdpMVcrRDVsb2RROVJ3eHJwd3RERlE9PQ==
 X-SES-DKIM-SIGNATURE: a=rsa-sha256; q=dns/txt; b=MfnHBxWQeJf61qjLkBd7SsWBvu4A4JnsIIl90iDSGNCNf0BwnHTRGIm2bEX1b4+9Ct4Zbn/KRv4pDeKhK/fZ5Pq90JwtCGgWCfoq0DdhZwSXY8Qf8162KT++tXqbH/AN2gDM7e7yEA5bq6hiXVkcFJqaBncjQ20cd37Cxkm9QW0=; c=relaxed/simple; s=xplzuhjr4seloozmmorg6obznvt7ijlt; d=amazonses.com; t=1732937549; v=1; bh=pEA/iKHbRafGz6jSjdjbK2UTOQturNeIpYW7PVjp+UE=; h=From:To:Cc:Bcc:Subject:Date:Message-ID:MIME-Version:Content-Type:X-SES-RECEIPT;
 Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-2e9e377aeadso2006434a91.1
-        for <inbound@news.smitchee.com>; Fri, 29 Nov 2024 19:32:27 -0800 (PST)
+        for <inbound@news.foo.com>; Fri, 29 Nov 2024 19:32:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1732937547; x=1733542347; darn=news.smitchee.com;
+        d=gmail.com; s=20230601; t=1732937547; x=1733542347; darn=news.foo.com;
         h=to:subject:message-id:date:from:in-reply-to:references:mime-version
          :from:to:cc:subject:date:message-id:reply-to;
         bh=pEA/iKHbRafGz6jSjdjbK2UTOQturNeIpYW7PVjp+UE=;
@@ -48,11 +48,11 @@ X-Received: by 2002:a17:90b:17cd:b0:2ea:a3fc:b944 with SMTP id
 MIME-Version: 1.0
 References: <20241127042813.37633651.4673008@sailthru.com>
 In-Reply-To: <20241127042813.37633651.4673008@sailthru.com>
-From: Evan Smith <pastorius@gmail.com>
+From: Evan Smith <foo@foo.com>
 Date: Fri, 29 Nov 2024 19:32:14 -0800
 Message-ID: <CAHzWgFj3-aGrL5xLgc2FHpNj+B2+esLswm6COrHfGq5YY-qvAQ@mail.gmail.com>
 Subject: Fwd: Thanksgiving Travel, Wegovy Coverage, and the Best of November
-To: inbound@news.smitchee.com
+To: inbound@news.foo.com
 Content-Type: multipart/alternative; boundary="000000000000da7b7b062818f60e"
 
 --000000000000da7b7b062818f60e
