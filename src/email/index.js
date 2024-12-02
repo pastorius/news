@@ -1,5 +1,5 @@
-const { SESClient, SendEmailCommand } = require("@aws-sdk/client-ses");
-
+const { SESClient, SendEmailCommand } = require("@aws-sdk/client-ses")
+const { Converter } = require('showdown')
 const {
   S3Client,
   GetObjectCommand,
@@ -37,6 +37,7 @@ module.exports.handler = async (event) => {
         Message: {
           Body: {
             Text: { Data: objectContent },
+            Html: { Data: new Converter().makeHtml(objectContent) }
           },
           Subject: { Data: objectKey },
         },

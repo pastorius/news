@@ -1,9 +1,12 @@
-const striptags = require("striptags");
+const quotedPrintable = require('quoted-printable')
+const TurndownService = require('turndown')
 
 module.exports.strip = async function (text) {
-  return (await striptags(text, ['a']))
-    .replaceAll(/[\s]{2,}/g, ' ')
-    .replaceAll('/=\s+/', '')
+  const lines = text.split('\r\n')
+  const marker = lines[lines.length - 2].match(/--([a-fA-F\d]+)--/)[1]
+  const parts = text.split(`--${marker}`)
+  const part = quotedPrintable.decode(parts[parts.length - 2]).toString('utf8')
+  return new TurndownService().turndown(part.replaceAll('â', "&apos;").replaceAll('Â', ''))
 }
 
 module.exports.buildPrompt = async function (...text) {
