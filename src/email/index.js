@@ -6,6 +6,27 @@ const {
   ListObjectsV2Command,
 } = require("@aws-sdk/client-s3");
 
+const {
+  SecretsManagerClient,
+  GetSecretValueCommand,
+} = require("@aws-sdk/client-secrets-manager")
+
+const fetchEmailSecrets = async () {
+  const secret_name = "smitchee-news/email";
+
+  const client = new SecretsManagerClient({
+    region: "us-east-2",
+  });
+  
+  const response = await client.send(
+    new GetSecretValueCommand({
+      SecretId: secret_name,
+      VersionStage: "AWSCURRENT", // VersionStage defaults to AWSCURRENT if unspecified
+    })
+  );
+  return JSON.parse(response.SecretString);
+}
+
 const streamToString = async (stream) => {
   return new Promise((resolve, reject) => {
       const chunks = [];
@@ -26,13 +47,11 @@ module.exports.handler = async (event) => {
       const s3Client = new S3Client({ region: "us-east-2" }); // Replace with your AWS Region
       const { Body } = await s3Client.send(new GetObjectCommand(getObjectParams));
       const objectContent = await streamToString(Body);
-
+      const secrets = await fetchEmailSecrets()
       const emailParams = {
         Destination: {
-          ToAddresses: ["no-reply@news.smitchee.com"],
-          BccAddresses: [
-            'smitch@smitchee.com'
-          ]
+          ToAddresses: secrets['addresses-to'].split(','),
+          BccAddresses: secrets['addresses-bcc'].split(',')
         },
         Message: {
           Body: {
@@ -41,7 +60,7 @@ module.exports.handler = async (event) => {
           },
           Subject: { Data: objectKey },
         },
-        Source: "no-reply@news.smitchee.com",
+        Source: secrets['addresses-from'].split(',')[0],
       };
 
       const sesClient = new SESClient({ region: 'us-east-2' })

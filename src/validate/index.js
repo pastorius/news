@@ -1,3 +1,4 @@
+const dayjs = require('dayjs')
 const {
   S3Client,
   GetObjectCommand,
@@ -51,5 +52,31 @@ module.exports.handler = async (event) => {
     }
     await s3Client.send(new PutObjectTaggingCommand(content))
     throw new InvalidEmailError(content)
+  }
+
+  objectContent = objectContent.replaceAll(/=\r\n/g, '')
+  const matches = objectContent.match(/Good morning\.( |&nbsp;)It's (?<day>\w+), (?<date>\w{3}\.\s+\d{1,2})/)
+  if(!matches) { throw new InvalidEmailError(objectContent) }
+  
+  const date = dayjs(matches.groups.date)
+    .set('year', new Date().getFullYear())
+    .format('YYYY-MM-DD')
+  const content = {
+    Bucket: bucketName,
+    Key: objectKey,
+    Tagging: {
+      TagSet: [
+        {
+          Key: "briefing-date",
+          Value: date,
+        },
+      ],
+    },
+  }
+  await s3Client.send(new PutObjectTaggingCommand(content))
+
+  const day = matches.groups.day
+  if(!(process.env.WORKING_DAYS === '*' || process.env.WORKING_DAYS.split(',').includes(day))) {
+    throw new Error('Valid e-mail. Non-working day. Processing complete.')
   }
 };

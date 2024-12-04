@@ -26,6 +26,7 @@
     "npm": "^10.9.1"
   },
   "dependencies": {
+    "dayjs": "^1.11.13",
     "quoted-printable": "^1.0.1",
     "showdown": "^2.1.0",
     "turndown": "^7.2.0"
